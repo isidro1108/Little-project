@@ -9,3 +9,4 @@ class Piece:
         self.position = position
         self.value = self.pieces[self.name][2]
         self.symbol = self.pieces[self.name][self.colors[self.color]]
+        self.moves = 0
