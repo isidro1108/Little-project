@@ -1,3 +1,5 @@
+from table import Table
+
 # colors = {'white': 0, 'black': 1}
 # pieces = {'pawn': ['♟','♙', 1], 'tower': ['♜','♖', 5], 'horse': ['♞','♘', 3], 
 #           'bishop': ['♝','♗', 3], 'queen': ['♛','♕', 9], 'king': ['♚','♔', 'abstract value']}
