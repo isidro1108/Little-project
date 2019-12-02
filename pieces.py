@@ -25,7 +25,7 @@ class Queen(Piece):
 class Bishop(Piece):
     pass
 
-class Horse(Piece):
+class knight(Piece):
     pass
 
 class Tower(Piece):
