@@ -5,6 +5,8 @@ from table import Table
 #           'bishop': ['♝','♗', 3], 'queen': ['♛','♕', 9], 'king': ['♚','♔', 'abstract value']}
 
 class Piece:
+    color_p = {'white': 0, 'black': 1}
+
     def __init__(self, color, position):
         self.color = color
         self.position = position
@@ -12,7 +14,6 @@ class Piece:
         self.is_defended = None
 
 class King(Piece):
-    color_p = {'white': 0, 'black': 1}
     symbols = ['♚','♔']
 
     def __init__(self, color, position):
@@ -20,16 +21,36 @@ class King(Piece):
         self.symbol = self.symbols[self.color_p[color]]
 
 class Queen(Piece):
-    pass
+    symbols = ['♛','♕']
+
+    def __init__(self, color, position):
+        Piece.__init__(self, color, position)
+        self.symbol = self.symbols[self.color_p[color]]
 
 class Bishop(Piece):
-    pass
+    symbols = ['♝','♗']
+
+    def __init__(self, color, position):
+        Piece.__init__(self, color, position)
+        self.symbol = self.symbols[self.color_p[color]]
 
 class knight(Piece):
-    pass
+    symbols = ['♞','♘']
+
+    def __init__(self, color, position):
+        Piece.__init__(self, color, position)
+        self.symbol = self.symbols[self.color_p[color]]
 
 class Tower(Piece):
-    pass
+    symbols = ['♜','♖']
+
+    def __init__(self, color, position):
+        Piece.__init__(self, color, position)
+        self.symbol = self.symbols[self.color_p[color]]
 
 class Pawn(Piece):
-    pass
+    symbols = ['♟','♙']
+
+    def __init__(self, color, position):
+        Piece.__init__(self, color, position)
+        self.symbol = self.symbols[self.color_p[color]]
