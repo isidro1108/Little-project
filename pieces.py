@@ -17,7 +17,7 @@ class King(Piece):
         Piece.__init__(self, color, p1, p2)
         self.symbol = self.symbols[self.color_p[color]]
         self.movements = [(p1 + 1, p2 + 1), (p1 - 1, p2 - 1), (p1 + 1, p2 - 1), (p1 - 1, p2 + 1), 
-                    (p1 + 1, p2), (p1 - 1, p2), (p1, p2 + 1), (p1, p2 - 1)]
+                        (p1 + 1, p2), (p1 - 1, p2), (p1, p2 + 1), (p1, p2 - 1)]
     
     def move_piece(self, table, p1, p2):
         new_table = Table()
@@ -32,6 +32,8 @@ class King(Piece):
             table[p1][p2] = self.symbol
             self.p1 = p1
             self.p2 = p2
+            self.movements = [(p1 + 1, p2 + 1), (p1 - 1, p2 - 1), (p1 + 1, p2 - 1), (p1 - 1, p2 + 1), 
+                                (p1 + 1, p2), (p1 - 1, p2), (p1, p2 + 1), (p1, p2 - 1)]
             self.moves+= 1
         else:
             print('El movimiento que ha insertado es invalido') 
@@ -58,6 +60,8 @@ class Queen(Piece):
             table[p1][p2] = self.symbol
             self.p1 = p1
             self.p2 = p2
+            self.movements = [(p1 + 1, p2 + 1), (p1 - 1, p2 - 1), (p1 + 1, p2 - 1), (p1 - 1, p2 + 1), 
+                                (p1 + 1, p2), (p1 - 1, p2), (p1, p2 + 1), (p1, p2 - 1)]
             self.moves+= 1
         else:
             print('El movimiento que ha insertado es invalido')
@@ -83,6 +87,7 @@ class Bishop(Piece):
             table[p1][p2] = self.symbol
             self.p1 = p1
             self.p2 = p2
+            self.movements = [(p1 - 1, p2 - 1), (p1 + 1, p2 + 1), (p1 - 1, p2 + 1), (p1 + 1, p2 - 1)]
             self.moves+= 1
         else:
             print('El movimiento que ha insertado es invalido')
@@ -115,6 +120,7 @@ class Tower(Piece):
             table[p1][p2] = self.symbol
             self.p1 = p1
             self.p2 = p2
+            self.movements = [(p1 + 1, p2), (p1, p2 + 1), (p1 - 1, p2), (p1, p2 - 1)]
             self.moves+= 1
         else:
             print('El movimiento que ha insertado es invalido')
@@ -128,15 +134,15 @@ class Pawn(Piece):
         self.movements = []
 
 
-# table = Table()
-# chess_table = table.create_table()
+table = Table()
+chess_table = table.create_table()
 
-# king = King('black', 0, 4)
+bishop = Bishop('white', 7, 5)
 
-# chess_table[king.p1][king.p2] = king.symbol
+chess_table[bishop.p1][bishop.p2] = bishop.symbol
 
-# table.print_table(chess_table)
+table.print_table(chess_table)
 
-# king.move_piece(chess_table, int(input('Coordenada 1: ')), int(input('Coordenada 2: ')))
-
-# table.print_table(chess_table)
+while True:
+    bishop.move_piece(chess_table, int(input('Coordenada 1: ')), int(input('Coordenada 2: ')))
+    table.print_table(chess_table)
