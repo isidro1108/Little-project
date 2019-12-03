@@ -32,6 +32,7 @@ class King(Piece):
             table[p1][p2] = self.symbol
             self.p1 = p1
             self.p2 = p2
+            self.moves+= 1
         else:
             print('El movimiento que ha insertado es invalido') 
 
@@ -57,6 +58,7 @@ class Queen(Piece):
             table[p1][p2] = self.symbol
             self.p1 = p1
             self.p2 = p2
+            self.moves+= 1
         else:
             print('El movimiento que ha insertado es invalido')
 
@@ -81,6 +83,7 @@ class Bishop(Piece):
             table[p1][p2] = self.symbol
             self.p1 = p1
             self.p2 = p2
+            self.moves+= 1
         else:
             print('El movimiento que ha insertado es invalido')
 
@@ -112,6 +115,7 @@ class Tower(Piece):
             table[p1][p2] = self.symbol
             self.p1 = p1
             self.p2 = p2
+            self.moves+= 1
         else:
             print('El movimiento que ha insertado es invalido')
 
