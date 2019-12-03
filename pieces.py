@@ -30,7 +30,7 @@ class Bishop(Piece):
         Piece.__init__(self, color, position)
         self.symbol = self.symbols[self.color_p[color]]
 
-class knight(Piece):
+class Knight(Piece):
     symbols = ['♞','♘']
 
     def __init__(self, color, position):
