@@ -15,6 +15,6 @@ class Table:
             row-= 1
         print('   ', 'a   ','b   ','c   ','d   ','e   ','f   ','g   ', 'h')
 
-    def show_b_content(self, table, position):
-        letters = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6, 'h': 7}
-        return table[8 - int(position[1])][letters[position[0]]]
+    # def show_b_content(self, table, position):
+    #     letters = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6, 'h': 7}
+    #     return table[8 - int(position[1])][letters[position[0]]]
