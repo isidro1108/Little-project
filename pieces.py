@@ -16,6 +16,8 @@ class King(Piece):
     def __init__(self, color, p1, p2):
         piece.__init__(self, color, p1, p2)
         self.symbol = self.symbols[self.color_p[color]]
+        self.moves = [(p1 + 1, p2 + 1), (p1 - 1, p2 - 1), (p1 + 1, p2 - 1), (p1 - 1, p2 + 1), 
+                    (p1 + 1, p2), (p1 - 1, p2), (p1, p2 + 1), (p1, p2 - 1)]
 
 class Queen(Piece):
     symbols = ['♛','♕']
