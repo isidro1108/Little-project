@@ -23,6 +23,7 @@ class Queen(Piece):
     def __init__(self, color, p1, p2):
         Piece.__init__(self, color, p1, p2)
         self.symbol = self.symbols[self.color_p[color]]
+        self.moves = [(p1 + 1, p2 + 2), (p1 + 1, p2 - 1), (p1 - 1, p2 + 1), (p1, p2 + 1),(p1 + 1, p2), (p1 - 1, p2 - 2),(p1 - 1, p2),(p1 , p2 -1) ]
 
 class Bishop(Piece):
     symbols = ['♝','♗']
