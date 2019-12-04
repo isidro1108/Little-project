@@ -98,6 +98,27 @@ class Knight(Piece):
     def __init__(self, color, p1, p2):
         Piece.__init__(self, color, p1, p2)
         self.symbol = self.symbols[self.color_p[color]]
+        self.movements = [(p1 + 2, p2 + 1), (p1 - 2, p2 - 1), (p1 + 2, p2 - 1), (p1 - 2, p2 + 1),
+                        (p1 + 1, p2 + 2), (p1 - 1, p2 - 2), (p1 + 1, p2 - 2), (p1 - 1, p2 + 2)]
+    
+    def move_piece(self, table, p1, p2):
+        new_table = Table()
+        empty_table = new_table.create_table()
+        p_movements = []
+        for movement in self.movements:
+            if movement[0] < 8 and movement[0] >= 0:
+                if movement[1] < 8 and movement[1] >= 0:
+                    p_movements.append(movement)
+        if (p1, p2) in p_movements:
+            table[self.p1][self.p2] = empty_table[self.p1][self.p2]
+            table[p1][p2] = self.symbol
+            self.p1 = p1
+            self.p2 = p2
+            self.movements = [(p1 + 2, p2 + 1), (p1 - 2, p2 - 1), (p1 + 2, p2 - 1), (p1 - 2, p2 + 1),
+                            (p1 + 1, p2 + 2), (p1 - 1, p2 - 2), (p1 + 1, p2 - 2), (p1 - 1, p2 + 2)]
+            self.moves+= 1
+        else:
+            print('El movimiento que ha insertado es invalido')
 
 class Tower(Piece):
     symbols = ['♜','♖']
@@ -161,12 +182,12 @@ class Pawn(Piece):
 table = Table()
 chess_table = table.create_table()
 
-pawn = Pawn('black', 1, 4)
+knight = Knight('black', 0, 1)
 
-chess_table[pawn.p1][pawn.p2] = pawn.symbol
+chess_table[knight.p1][knight.p2] = knight.symbol
 
 table.print_table(chess_table)
 
 while True:
-    pawn.move_piece(chess_table, int(input('Coordenada 1: ')), int(input('Coordenada 2: ')))
+    knight.move_piece(chess_table, int(input('Coordenada 1: ')), int(input('Coordenada 2: ')))
     table.print_table(chess_table)
