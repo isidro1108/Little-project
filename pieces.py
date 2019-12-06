@@ -157,8 +157,6 @@ class Pawn(Piece):
         self.movements = [(p1 - 1, p2)]
     
     def move_piece(self, table, p1, p2):
-        new_table = Table()
-        empty_table = new_table.create_table()
         p_movements = []
         if self.color == 'black':
             self.movements = [(self.p1 + 1, self.p2)]
@@ -171,25 +169,9 @@ class Pawn(Piece):
         if self.moves == 0 and self.color == 'black':
             p_movements.append((self.p1 + 2, self.p2))
         if (p1, p2) in p_movements:
-            table[self.p1][self.p2] = empty_table[self.p1][self.p2]
-            table[p1][p2] = self.symbol
             self.p1 = p1
             self.p2 = p2
             self.movements = [(p1 - 1, p2)]
             self.moves+= 1
         else:
             print('El movimiento que ha insertado es invalido')
-
-
-table = Table()
-chess_table = table.create_table()
-
-knight = Knight('black', 0, 1)
-
-chess_table[knight.p1][knight.p2] = knight.symbol
-
-table.print_table(chess_table)
-
-while True:
-    knight.move_piece(chess_table, int(input('Coordenada 1: ')), int(input('Coordenada 2: ')))
-    table.print_table(chess_table)
