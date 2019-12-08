@@ -1,6 +1,6 @@
 class Table:
     def __init__(self):
-        self.create_table = [['⬜','⬛','⬜','⬛','⬜','⬛','⬜','⬛'],
+        self.chess_table = [['⬜','⬛','⬜','⬛','⬜','⬛','⬜','⬛'],
                             ['⬛','⬜','⬛','⬜','⬛','⬜','⬛','⬜'],
                             ['⬜','⬛','⬜','⬛','⬜','⬛','⬜','⬛'],
                             ['⬛','⬜','⬛','⬜','⬛','⬜','⬛','⬜'],
@@ -26,4 +26,7 @@ class Table:
     #     print('   ', 'a   ','b   ','c   ','d   ','e   ','f   ','g   ', 'h')
 
     def box_is_available(self, p1, p2):
-        return self.create_table[p1][p2] == '⬜' or self.create_table[p1][p2] == '⬛'
+        if p1 >= 8 and p1 < 0:
+            if p2 >= 8 and p2 < 0:
+                return self.chess_table[p1][p2] == '⬜' or self.chess_table[p1][p2] == '⬛'
+        return False
