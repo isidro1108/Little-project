@@ -1,12 +1,18 @@
 from table import Table
-from pieces import King
-from pieces import Queen
-from pieces import Bishop
-from pieces import Knight
-from pieces import Tower
-from pieces import Pawn
+import pieces
+from pieces.king import King
+from pieces.queen import Queen
+from pieces.bishop import Bishop
+from pieces.knight import Knight
+from pieces.tower import Tower
+from pieces.pawn import Pawn
 
 class Player:
-    def __init__(self, name, c_pieces):
+    def __init__(self, name):
         self.name = name
-        self.c_pieces = c_pieces
+
+class Player1(Player):
+    pass
+
+class Player2(Player):
+    pass
