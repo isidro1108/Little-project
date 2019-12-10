@@ -9,7 +9,7 @@ class Knight(Piece):
         self.movements = [(2, 1), (-2, -1), (2, -1), (-2, 1),
                         (1, 2), (-1, -2), (1, -2), (-1, 2)]
     
-    def move_piece(self, p1, p2):
+    def move(self, p1, p2):
         if (p1 - self.p1, p2 - self.p2) in self.movements:
             self.p1 = p1
             self.p2 = p2
