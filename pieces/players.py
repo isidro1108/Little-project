@@ -50,7 +50,7 @@ player2 = Player2('Yoliber')
 player1.insert_pieces(chess_table.c_table)
 player2.insert_pieces(chess_table.c_table)
 
-print(isinstance(chess_table.c_table[1][1], Queen))
+print(isinstance(chess_table.c_table[1][1], Piece))
 
 
 
