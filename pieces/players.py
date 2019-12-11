@@ -25,7 +25,7 @@ class Player1(Player):
     
     def insert_pieces(self, table):
         for piece in self.pieces:
-            table.c_table[piece.p1][piece.p2] = piece
+            table[piece.p1][piece.p2] = piece
 
 class Player2(Player):
     def __init__(self, name):
@@ -41,16 +41,16 @@ class Player2(Player):
         
     def insert_pieces(self, table):
         for piece in self.pieces:
-            table.c_table[piece.p1][piece.p2] = piece
+            table[piece.p1][piece.p2] = piece
 
 chess_table = Table()
 player1 = Player1('Isidro')
 player2 = Player2('Yoliber')
 
-player1.insert_pieces(chess_table)
-player2.insert_pieces(chess_table)
+player1.insert_pieces(chess_table.c_table)
+player2.insert_pieces(chess_table.c_table)
 
-print(isinstance(chess_table.c_table[1][1], Piece))
+print(isinstance(chess_table.c_table[1][1], Queen))
 
 
 
