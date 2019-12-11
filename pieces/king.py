@@ -1,4 +1,4 @@
-from pieces import Piece
+from piece import Piece
 
 class King(Piece):
     # symbols = ['♚','♔']
