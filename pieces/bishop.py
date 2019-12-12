@@ -1,11 +1,10 @@
-from piece import Piece
+from father_class.piece import Piece
 
 class Bishop(Piece):
     # symbols = ['♝','♗']
 
     def __init__(self, color, p1, p2):
         Piece.__init__(self, color, p1, p2)
-        # self.symbol = self.symbols[self.color_p[color]]
         self.movements = [(-1, -1), (1, 1), (-1, 1), (1, -1)]
     
     def move(self, p1, p2):

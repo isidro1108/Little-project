@@ -1,6 +1,4 @@
 class Piece:
-    color_p = {'white': 0, 'black': 1}
-
     def __init__(self, color, p1, p2):
         self.color = color
         self.p1 = p1
@@ -11,5 +9,3 @@ class Piece:
         
     def move_in_movements(self, p1, p2):
         return (p1 - self.p1, p2 - self.p2) in self.movements
-        
-    

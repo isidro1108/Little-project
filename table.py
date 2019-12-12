@@ -13,10 +13,3 @@ class Table:
         
     def is_available(self, p1, p2):
         return self.c_table[p1][2] == '⬜' or self.c_table[p1][2] == '⬛'
-
-
-chess_table = Table()
-chess_table.create()
-
-for row in chess_table.c_table:
-    print(row)

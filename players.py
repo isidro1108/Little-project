@@ -1,11 +1,13 @@
+import os, sys
+
 from table import Table
-from piece import Piece
-from king import King
-from queen import Queen
-from bishop import Bishop
-from knight import Knight
-from tower import Tower
-from pawn import Pawn
+from father_class.piece import Piece
+from pieces.king import King
+from pieces.queen import Queen
+from pieces.bishop import Bishop
+from pieces.knight import Knight
+from pieces.tower import Tower
+from pieces.pawn import Pawn
 
 class Player:
     def __init__(self, name):
@@ -53,9 +55,3 @@ player1.insert_pieces(chess_table.c_table)
 player2.insert_pieces(chess_table.c_table)
 
 print(isinstance(chess_table.c_table[1][1], Piece))
-
-
-
-
-
-

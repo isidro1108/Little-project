@@ -1,4 +1,4 @@
-from piece import Piece
+from father_class.piece import Piece
 
 class Pawn(Piece):
     # symbols = ['♟','♙']
