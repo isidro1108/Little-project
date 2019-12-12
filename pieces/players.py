@@ -44,6 +44,8 @@ class Player2(Player):
             table[piece.p1][piece.p2] = piece
 
 chess_table = Table()
+chess_table.create()
+
 player1 = Player1('Isidro')
 player2 = Player2('Yoliber')
 
