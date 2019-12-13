@@ -11,10 +11,10 @@ class Piece:
     def move_in_movements(self, p1, p2):
         return (p1 - self.p1, p2 - self.p2) in self.movements
     
-    def move(self, p1, p2):
-        if self.move_in_movements(p1, p2):
-            self.p1 = p1
-            self.p2 = p2
+    def move(self, table, p1, p2):
+        if self.move_in_movements(p1, p2) and table.is_available(p1, p2):
+            table.c_table[p1][p2], table.c_table[self.p1][self.p2] = self, self.my_box
+            self.p1, self.p2 = p1, p2
             self.moves+= 1
         else:
             print('El movimiento que ha insertado es invalido')

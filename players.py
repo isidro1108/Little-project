@@ -14,7 +14,7 @@ class Player:
     
     def insert_pieces(self, table):
         for piece in self.pieces:
-            piece.my_box, table[piece.p1][piece.p2] = table[piece.p1][piece.p2], piece
+            piece.my_box, table.c_table[piece.p1][piece.p2] = table.c_table[piece.p1][piece.p2], piece
 
 class Player1(Player):
     def __init__(self, name):
@@ -46,8 +46,13 @@ chess_table.create()
 player1 = Player1('Isidro')
 player2 = Player2('Yoliber')
 
-player1.insert_pieces(chess_table.c_table)
-player2.insert_pieces(chess_table.c_table)
+player1.insert_pieces(chess_table)
+player2.insert_pieces(chess_table)
 
 print(isinstance(chess_table.c_table[1][1], Piece))
-print(chess_table.c_table[0][1].my_box)
+print(chess_table.c_table[7][1].p1, chess_table.c_table[7][1].p2)
+
+chess_table.c_table[7][1].move(chess_table, 5, 2)
+print(chess_table.c_table[7][1])
+
+print(chess_table.c_table[5][2].p1, chess_table.c_table[5][2].p2)
