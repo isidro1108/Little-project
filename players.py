@@ -49,10 +49,11 @@ player2 = Player2('Yoliber')
 player1.insert_pieces(chess_table)
 player2.insert_pieces(chess_table)
 
-print(isinstance(chess_table.c_table[1][1], Piece))
-print(chess_table.c_table[7][1].p1, chess_table.c_table[7][1].p2)
+chess_table.c_table[5][4] = Pawn('white', 5, 4)
 
-chess_table.c_table[7][1].move(chess_table, 5, 2)
-print(chess_table.c_table[7][1])
+print(chess_table.c_table[6][4].p1, chess_table.c_table[6][4].p2)
 
-print(chess_table.c_table[5][2].p1, chess_table.c_table[5][2].p2)
+chess_table.c_table[6][4].move(chess_table, 4, 4)
+print(chess_table.c_table[6][4])
+
+print(chess_table.c_table[4][4].p1, chess_table.c_table[4][4].p2)
