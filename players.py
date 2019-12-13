@@ -1,5 +1,3 @@
-import os, sys
-
 from table import Table
 from father_class.piece import Piece
 from pieces.king import King
