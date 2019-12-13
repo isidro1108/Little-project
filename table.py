@@ -12,4 +12,7 @@ class Table:
         return
         
     def is_available(self, p1, p2):
-        return self.c_table[p1][2] == '⬜' or self.c_table[p1][2] == '⬛'
+        return self.c_table[p1][p2] == '⬜' or self.c_table[p1][p2] == '⬛'
+
+    def is_piece(self, p1, p2):
+        return not self.is_available(p1, p2)
