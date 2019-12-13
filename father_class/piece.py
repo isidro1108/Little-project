@@ -10,3 +10,11 @@ class Piece:
         
     def move_in_movements(self, p1, p2):
         return (p1 - self.p1, p2 - self.p2) in self.movements
+    
+    def move(self, p1, p2):
+        if self.move_in_movements(p1, p2):
+            self.p1 = p1
+            self.p2 = p2
+            self.moves+= 1
+        else:
+            print('El movimiento que ha insertado es invalido')
