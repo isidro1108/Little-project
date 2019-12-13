@@ -10,6 +10,11 @@ from pieces.pawn import Pawn
 class Player:
     def __init__(self, name):
         self.name = name
+        self.pieces = []
+    
+    def insert_pieces(self, table):
+        for piece in self.pieces:
+            piece.my_box, table[piece.p1][piece.p2] = table[piece.p1][piece.p2], piece
 
 class Player1(Player):
     def __init__(self, name):
@@ -22,10 +27,6 @@ class Player1(Player):
                         Pawn('white', 6, 2), Pawn('white', 6, 3),
                         Pawn('white', 6, 4), Pawn('white', 6, 5),
                         Pawn('white', 6, 6), Pawn('white', 6, 7)]
-    
-    def insert_pieces(self, table):
-        for piece in self.pieces:
-            table[piece.p1][piece.p2] = piece
 
 class Player2(Player):
     def __init__(self, name):
@@ -38,10 +39,6 @@ class Player2(Player):
                         Pawn('black', 1, 2), Pawn('black', 1, 3),
                         Pawn('black', 1, 4), Pawn('black', 1, 5),
                         Pawn('black', 1, 6), Pawn('black', 1, 7)]
-        
-    def insert_pieces(self, table):
-        for piece in self.pieces:
-            table[piece.p1][piece.p2] = piece
 
 chess_table = Table()
 chess_table.create()
@@ -53,3 +50,4 @@ player1.insert_pieces(chess_table.c_table)
 player2.insert_pieces(chess_table.c_table)
 
 print(isinstance(chess_table.c_table[1][1], Piece))
+print(chess_table.c_table[0][1].my_box)
