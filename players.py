@@ -1,4 +1,4 @@
-from table import Table
+from table.table import Table
 from father_class.piece import Piece
 from pieces.king import King
 from pieces.queen import Queen
