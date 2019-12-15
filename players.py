@@ -1,4 +1,5 @@
-from table.table import Table
+from table import Table
+from box import Box
 from father_class.piece import Piece
 from pieces.king import King
 from pieces.queen import Queen
@@ -14,7 +15,7 @@ class Player:
     
     def insert_pieces(self, table):
         for piece in self.pieces:
-            piece.my_box, table.c_table[piece.p1][piece.p2] = table.c_table[piece.p1][piece.p2], piece
+            table.c_table[piece.p1][piece.p2].piece_in_self = piece
 
 class Player1(Player):
     def __init__(self, name):
@@ -49,11 +50,11 @@ player2 = Player2('Yoliber')
 player1.insert_pieces(chess_table)
 player2.insert_pieces(chess_table)
 
-chess_table.c_table[5][4] = Pawn('white', 5, 4)
-
-print(chess_table.c_table[6][4].p1, chess_table.c_table[6][4].p2)
-
-chess_table.c_table[6][4].move(chess_table, 4, 4)
-print(chess_table.c_table[6][4])
-
-print(chess_table.c_table[4][4].p1, chess_table.c_table[4][4].p2)
+for row in chess_table.c_table:
+    types = []
+    for e in row:
+        if e.piece_in_self == None:
+            types.append('None')
+        else:
+            types.append('piece')
+    print(types)

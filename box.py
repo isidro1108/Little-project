@@ -4,3 +4,6 @@ class Box:
         self.p1 = p1
         self.p2 = p2
         self.piece_in_self = None
+    
+    def is_available(self):
+        return self.piece_in_self == None

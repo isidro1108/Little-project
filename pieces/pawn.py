@@ -10,11 +10,12 @@ class Pawn(Piece):
         self.movements = [(1 * self.dir, 0), (2 * self.dir, 0)] # Primera aplicacion del atributo dir
     
     def move(self, table, p1, p2):
-        if self.move_in_movements(p1, p2) and table.is_available(p1, p2):
-            if (p1 - self.p1, p2 - self.p2) == (2 * self.dir, 0) and table.is_piece(self.p1 - 1, self.p2):
+        destiny = table.c_table[p1][p2]
+        if self.move_in_movements(p1, p2) and destiny.is_available:
+            if (p1 - self.p1, p2 - self.p2) == (2 * self.dir, 0) and not table.c_table[p1 - 1][p2].is_available:
                 print('El peon no puede pasar por encima de sus fichas')
                 return
-            table.c_table[p1][p2], table.c_table[self.p1][self.p2] = self, self.my_box
+            destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
             self.p1, self.p2 = p1, p2
             self.movements = [(1 * self.dir, 0)] # Segunda aplicacion del atributo dir
             self.moves+= 1
