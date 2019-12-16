@@ -50,11 +50,10 @@ player2 = Player2('Yoliber')
 player1.insert_pieces(chess_table)
 player2.insert_pieces(chess_table)
 
-for row in chess_table.c_table:
-    types = []
-    for e in row:
-        if e.piece_in_self == None:
-            types.append('None')
-        else:
-            types.append('piece')
-    print(types)
+pawn = chess_table.c_table[1][3].piece_in_self
+knight = chess_table.c_table[7][1].piece_in_self
+
+knight.move(chess_table, 5, 2)
+pawn.move(chess_table, 3, 3)
+knight.capture(chess_table, 3, 3)
+print(chess_table.repository)

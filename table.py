@@ -3,7 +3,7 @@ from box import Box
 class Table:
     def __init__(self):
         self.c_table = []
-        self.white = []
+        self.repository = []
     
     def create(self, turn_row = 1):
         p1 = turn_row - 1
