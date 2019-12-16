@@ -12,7 +12,7 @@ class Pawn(Piece):
     def move(self, table, p1, p2):
         destiny = table.c_table[p1][p2]
         if self.move_in_movements(p1, p2) and destiny.is_available():
-            if (p1 - self.p1, p2 - self.p2) == (2 * self.dir, 0) and not table.c_table[p1 - 1][p2].is_available():
+            if (p1 - self.p1, p2 - self.p2) == (2 * self.dir, 0) and not table.c_table[p1 - self.dir][p2].is_available():
                 print('El peon no puede pasar por encima de sus fichas')
                 return
             destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None

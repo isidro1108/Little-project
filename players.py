@@ -50,10 +50,10 @@ player2 = Player2('Yoliber')
 player1.insert_pieces(chess_table)
 player2.insert_pieces(chess_table)
 
-pawn = chess_table.c_table[1][3].piece_in_self
-knight = chess_table.c_table[7][1].piece_in_self
+pawn1 = chess_table.c_table[6][4].piece_in_self
+pawn2 = chess_table.c_table[1][4].piece_in_self
 
-knight.move(chess_table, 5, 2)
-pawn.move(chess_table, 3, 3)
-knight.capture(chess_table, 3, 3)
-print(chess_table.repository)
+pawn2.move(chess_table, 3, 4)
+pawn2.move(chess_table, 4, 4)
+pawn2.move(chess_table, 5, 4)
+pawn1.move(chess_table, 4, 4)
