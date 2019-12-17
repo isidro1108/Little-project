@@ -15,7 +15,7 @@ class Piece:
                 if (p1 < 8 and p1 >= 0) and (p2 < 8 and p2 >= 0):
                     table.c_table[p1][p2].controlled_by.append((type(self), self.color))
     
-    def quit_control(self, table):
+    def __quit_control(self, table):
         for movement in self.movements:
                 p1, p2 = self.p1 + movement[0], self.p2 + movement[1]
                 if (p1 < 8 and p1 >= 0) and (p2 < 8 and p2 >= 0):
@@ -25,7 +25,9 @@ class Piece:
         destiny = table.c_table[p1][p2]
         if self.move_in_movements(p1, p2) and destiny.is_available():
             destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
+            self.__quit_control(table)
             self.p1, self.p2 = p1, p2
+            self.set_control(table)
             self.moves+= 1
         else:
             print('El movimiento que ha insertado es invalido')
@@ -38,7 +40,9 @@ class Piece:
             if is_enemy_piece:
                 table.repository.append(f_piece)
                 f_piece, table.c_table[self.p1][self.p2].piece_in_self = self, None
+                self.__quit_control(table)
                 self.p1, self.p2 = p1, p2
+                self.set_control(table)
                 self.moves+= 1
             else:
                 print('Esta no es una pieza enemiga')

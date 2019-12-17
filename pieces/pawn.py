@@ -39,7 +39,9 @@ class Pawn(Piece):
             else:
                 self.p_step_capture = False
             destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
+            self.__quit_control(table)
             self.p1, self.p2 = p1, p2
+            self.set_control(table)
             self.movements = [(self.dir, 0)]
             self.moves+= 1
         else:
@@ -53,7 +55,9 @@ class Pawn(Piece):
             if is_enemy_piece:
                 table.repository.append(f_piece)
                 f_piece, table.c_table[self.p1][self.p2].piece_in_self = self, None
+                self.__quit_control(table)
                 self.p1, self.p2 = p1, p2
+                self.set_control(table)
                 self.moves+= 1
             else:
                 print('Esta no es una pieza enemiga')
@@ -69,7 +73,9 @@ class Pawn(Piece):
             if is_enemy_piece and f_piece.p_step_capture:
                 table.repository.append(f_piece)
                 c_destiny.piece_in_self, destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = None, self, None
+                self.__quit_control(table)
                 self.p1, self.p2 = p1, p2
+                self.set_control(table)
                 self.moves+= 1
             else:
                 print('Esta no es una pieza enemiga o no se puede capturar al paso')
