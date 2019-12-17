@@ -22,29 +22,31 @@ class Piece:
                     table.c_table[p1][p2].controlled_by.remove((type(self), self.color))
     
     def move(self, table, p1, p2):
-        destiny = table.c_table[p1][p2]
-        if self.move_in_movements(p1, p2) and destiny.is_available():
-            destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
-            self.__quit_control(table)
-            self.p1, self.p2 = p1, p2
-            self.set_control(table)
-            self.moves+= 1
-        else:
-            print('El movimiento que ha insertado es invalido')
-
-    def capture(self, table, p1, p2):
-        destiny = table.c_table[p1][p2]
-        if self.move_in_movements(p1, p2) and not destiny.is_available():
-            f_piece = table.c_table[p1][p2].piece_in_self
-            is_enemy_piece = isinstance(f_piece, Piece) and f_piece.color != self.color
-            if is_enemy_piece:
-                table.repository.append(f_piece)
-                f_piece, table.c_table[self.p1][self.p2].piece_in_self = self, None
+        if table.move_is_inside(p1, p2):
+            destiny = table.c_table[p1][p2]
+            if self.move_in_movements(p1, p2) and destiny.is_available():
+                destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
                 self.__quit_control(table)
                 self.p1, self.p2 = p1, p2
                 self.set_control(table)
                 self.moves+= 1
             else:
-                print('Esta no es una pieza enemiga')
-        else:
-            print('Este no es un movimiento válido o no hay pieza para capturar')
+                print('El movimiento que ha insertado es invalido')
+
+    def capture(self, table, p1, p2):
+        if table.move_is_inside(p1, p2):
+            destiny = table.c_table[p1][p2]
+            if self.move_in_movements(p1, p2) and not destiny.is_available():
+                f_piece = table.c_table[p1][p2].piece_in_self
+                is_enemy_piece = isinstance(f_piece, Piece) and f_piece.color != self.color
+                if is_enemy_piece:
+                    table.repository.append(f_piece)
+                    f_piece, table.c_table[self.p1][self.p2].piece_in_self = self, None
+                    self.__quit_control(table)
+                    self.p1, self.p2 = p1, p2
+                    self.set_control(table)
+                    self.moves+= 1
+                else:
+                    print('Esta no es una pieza enemiga')
+            else:
+                print('Este no es un movimiento válido o no hay pieza para capturar')

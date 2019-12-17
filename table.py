@@ -20,3 +20,6 @@ class Table:
                                 Box('black', p1, 6),Box('white', p1, 7)])
             return self.create(turn_row= turn_row + 1)
         return
+    
+    def move_is_inside(self, p1, p2):
+        return (p1 < 8 and p1 >= 0) and (p2 < 8 and p2 >= 0)
