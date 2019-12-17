@@ -4,7 +4,6 @@ class Piece:
         self.p1 = p1
         self.p2 = p2
         self.moves = 0
-        self.is_defended = None
         self.movements = []
         
     def move_in_movements(self, p1, p2):
