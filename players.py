@@ -16,6 +16,7 @@ class Player:
     def insert_pieces(self, table):
         for piece in self.pieces:
             table.c_table[piece.p1][piece.p2].piece_in_self = piece
+            piece.set_control(table)
 
 class Player1(Player):
     def __init__(self, name):
@@ -50,14 +51,4 @@ player2 = Player2('Yoliber')
 player1.insert_pieces(chess_table)
 player2.insert_pieces(chess_table)
 
-pawn2 = chess_table.c_table[1][3].piece_in_self
-pawn1 = chess_table.c_table[6][4].piece_in_self
-
-pawn1.move(chess_table, 4, 4)
-pawn1.move(chess_table, 3, 4)
-pawn2.move(chess_table, 3, 3)
-pawn1.step_capture(chess_table, 2, 3)
-print(chess_table.c_table[3][4].piece_in_self)
-print(chess_table.c_table[3][3].piece_in_self)
-print(chess_table.c_table[2][3].piece_in_self)
-print(chess_table.repository)
+print(chess_table.c_table[5][5].controlled_by)

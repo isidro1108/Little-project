@@ -8,6 +8,18 @@ class Piece:
         
     def move_in_movements(self, p1, p2):
         return (p1 - self.p1, p2 - self.p2) in self.movements
+
+    def set_control(self, table):
+        for movement in self.movements:
+                p1, p2 = self.p1 + movement[0], self.p2 + movement[1]
+                if (p1 < 8 and p1 >= 0) and (p2 < 8 and p2 >= 0):
+                    table.c_table[p1][p2].controlled_by.append((type(self), self.color))
+    
+    def quit_control(self, table):
+        for movement in self.movements:
+                p1, p2 = self.p1 + movement[0], self.p2 + movement[1]
+                if (p1 < 8 and p1 >= 0) and (p2 < 8 and p2 >= 0):
+                    table.c_table[p1][p2].controlled_by.remove((type(self), self.color))
     
     def move(self, table, p1, p2):
         destiny = table.c_table[p1][p2]
