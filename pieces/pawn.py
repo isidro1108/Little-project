@@ -30,6 +30,11 @@ class Pawn(Piece):
                     table.c_table[p1][p2].controlled_by.remove((type(self), self.color))
                     self.controlled_boxes = []
     
+    def change_position(self, table, p1, p2):
+        self.__quit_control(table)
+        self.p1, self.p2 = p1, p2
+        self.set_control(table)
+    
     def move(self, table, p1, p2):
         if table.move_is_inside(p1, p2):
             destiny = table.c_table[p1][p2]
