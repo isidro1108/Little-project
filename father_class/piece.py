@@ -24,14 +24,17 @@ class Piece:
                     table.c_table[p1][p2].controlled_by.remove((type(self), self.color))
                     self.controlled_boxes = []
     
+    def change_position(self, table, p1, p2):
+        self.__quit_control(table)
+        self.p1, self.p2 = p1, p2
+        self.set_control(table)
+    
     def move(self, table, p1, p2):
         if table.move_is_inside(p1, p2):
             destiny = table.c_table[p1][p2]
             if self.move_in_movements(p1, p2) and destiny.is_available():
                 destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
-                self.__quit_control(table)
-                self.p1, self.p2 = p1, p2
-                self.set_control(table)
+                self.change_position(table, p1, p2)
                 self.moves+= 1
             else:
                 print('El movimiento que ha insertado es invalido')
@@ -45,9 +48,7 @@ class Piece:
                 if is_enemy_piece:
                     f_piece.dead(table)
                     f_piece, table.c_table[self.p1][self.p2].piece_in_self = self, None
-                    self.__quit_control(table)
-                    self.p1, self.p2 = p1, p2
-                    self.set_control(table)
+                    self.change_position(table, p1, p2)
                     self.moves+= 1
                 else:
                     print('Esta no es una pieza enemiga')
