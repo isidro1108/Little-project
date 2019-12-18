@@ -52,11 +52,15 @@ player1.insert_pieces(chess_table)
 player2.insert_pieces(chess_table)
 
 knight = chess_table.c_table[7][6].piece_in_self
-pawn = chess_table.c_table[6][4].piece_in_self
+pawn = chess_table.c_table[1][4].piece_in_self
 
 knight.move(chess_table, 5, 5)
-pawn.move(chess_table, 4, 4)
+pawn.move(chess_table, 3, 4)
+knight.capture(chess_table, 3, 4)
 
-print(chess_table.c_table[5][5].controlled_by)
+print(pawn.controlled_boxes)
 
-print(chess_table.c_table[3][4].controlled_by)
+print(chess_table.c_table[4][5].controlled_by)
+print(chess_table.c_table[4][3].controlled_by)
+
+print(chess_table.repository)

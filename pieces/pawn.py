@@ -21,12 +21,14 @@ class Pawn(Piece):
                 p1, p2 = self.p1 + movement[0], self.p2 + movement[1]
                 if (p1 < 8 and p1 >= 0) and (p2 < 8 and p2 >= 0):
                     table.c_table[p1][p2].controlled_by.append((type(self), self.color))
+                    self.controlled_boxes.append((p1, p2))
     
     def __quit_control(self, table):
         for movement in self.c_movements:
                 p1, p2 = self.p1 + movement[0], self.p2 + movement[1]
                 if (p1 < 8 and p1 >= 0) and (p2 < 8 and p2 >= 0):
                     table.c_table[p1][p2].controlled_by.remove((type(self), self.color))
+                    self.controlled_boxes = []
     
     def move(self, table, p1, p2):
         if table.move_is_inside(p1, p2):
@@ -55,7 +57,7 @@ class Pawn(Piece):
                 f_piece = table.c_table[p1][p2].piece_in_self
                 is_enemy_piece = isinstance(f_piece, Piece) and f_piece.color != self.color
                 if is_enemy_piece:
-                    table.repository.append(f_piece)
+                    f_piece.dead(table)
                     f_piece, table.c_table[self.p1][self.p2].piece_in_self = self, None
                     self.__quit_control(table)
                     self.p1, self.p2 = p1, p2
@@ -74,7 +76,7 @@ class Pawn(Piece):
             if self.__move_in_c_movements(p1, p2) and destiny.is_available() and not c_destiny.is_available():
                 is_enemy_piece = isinstance(f_piece, Piece) and f_piece.color != self.color
                 if is_enemy_piece and f_piece.p_step_capture:
-                    table.repository.append(f_piece)
+                    f_piece.dead(table)
                     c_destiny.piece_in_self, destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = None, self, None
                     self.__quit_control(table)
                     self.p1, self.p2 = p1, p2
