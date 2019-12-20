@@ -55,10 +55,12 @@ pawn = chess_table.c_table[6][4].piece_in_self
 bishop = chess_table.c_table[7][5].piece_in_self
 knight = chess_table.c_table[7][6].piece_in_self
 king = chess_table.c_table[7][4].piece_in_self
+tower = chess_table.c_table[7][7].piece_in_self
 
 pawn.move(chess_table, 4, 4)
 bishop.move(chess_table, 6, 4)
 knight.move(chess_table, 5, 5)
+king.move(chess_table, 7, 5)
 king.castling_to_right(chess_table, 7)
 
 print(chess_table.c_table[7][4].piece_in_self)
