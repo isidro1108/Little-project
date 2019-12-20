@@ -18,6 +18,33 @@ class Player:
             table.c_table[piece.p1][piece.p2].piece_in_self = piece
             piece.set_control(table)
 
+    def move(self, table, p1, p2, pd1, pd2):
+        table.c_table[p1][p2].piece_in_self.move(table, pd1, pd2)
+    
+    def capture(self, table, p1, p2, pd1, pd2):
+        table.c_table[p1][p2].piece_in_self.capture(table, pd1, pd2)
+
+    def step_capture(self, table, p1, p2, pd1, pd2):
+        piece = table.c_table[p1][p2].piece_in_self
+        if isinstance(piece, Pawn):
+            piece.step_capture(table, pd1, pd2)
+        else:
+            print('Esta pieza no es un peón')
+    
+    def castling_to_left(self, table, p1, p2, pd2):
+        piece = table.c_table[p1][p2].piece_in_self
+        if isinstance(piece, King):
+            piece.castling_to_left(table, pd2)
+        else:
+            print('Esta pieza no es un rey')
+    
+    def castling_to_right(self, table, p1, p2, pd2):
+        piece = table.c_table[p1][p2].piece_in_self
+        if isinstance(piece, King):
+            piece.castling_to_right(table, pd2)
+        else:
+            print('Esta pieza no es un rey')
+
 class Player1(Player):
     def __init__(self, name):
         Player.__init__(self, name)
@@ -51,23 +78,12 @@ player2 = Player2('Yoliber')
 player1.insert_pieces(chess_table)
 player2.insert_pieces(chess_table)
 
-pawn = chess_table.c_table[6][3].piece_in_self
-queen = chess_table.c_table[7][3].piece_in_self
-bishop = chess_table.c_table[7][2].piece_in_self
-knight = chess_table.c_table[7][1].piece_in_self
-king = chess_table.c_table[7][4].piece_in_self
-tower = chess_table.c_table[7][0].piece_in_self
+player1.move(chess_table, 7, 6, 5, 5)
+player1.move(chess_table, 6, 6, 5, 6)
+player1.move(chess_table, 7, 5, 6, 6)
+player1.castling_to_right(chess_table, 7, 4, 7)
 
-pawn.move(chess_table, 4, 3)
-queen.move(chess_table, 6, 3)
-queen.move(chess_table, 5, 3)
-bishop.move(chess_table, 6, 3)
-knight.move(chess_table, 5, 2)
-king.castling_to_left(chess_table, 0)
-
-
-print(chess_table.c_table[7][0].piece_in_self)
-print(chess_table.c_table[7][1].piece_in_self)
-print(chess_table.c_table[7][2].piece_in_self)
-print(chess_table.c_table[7][3].piece_in_self)
 print(chess_table.c_table[7][4].piece_in_self)
+print(chess_table.c_table[7][5].piece_in_self)
+print(chess_table.c_table[7][6].piece_in_self)
+print(chess_table.c_table[7][7].piece_in_self)
