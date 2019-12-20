@@ -51,19 +51,23 @@ player2 = Player2('Yoliber')
 player1.insert_pieces(chess_table)
 player2.insert_pieces(chess_table)
 
-pawn = chess_table.c_table[6][4].piece_in_self
-bishop = chess_table.c_table[7][5].piece_in_self
-knight = chess_table.c_table[7][6].piece_in_self
+pawn = chess_table.c_table[6][3].piece_in_self
+queen = chess_table.c_table[7][3].piece_in_self
+bishop = chess_table.c_table[7][2].piece_in_self
+knight = chess_table.c_table[7][1].piece_in_self
 king = chess_table.c_table[7][4].piece_in_self
-tower = chess_table.c_table[7][7].piece_in_self
+tower = chess_table.c_table[7][0].piece_in_self
 
-pawn.move(chess_table, 4, 4)
-bishop.move(chess_table, 6, 4)
-knight.move(chess_table, 5, 5)
-king.move(chess_table, 7, 5)
-king.castling_to_right(chess_table, 7)
+pawn.move(chess_table, 4, 3)
+queen.move(chess_table, 6, 3)
+queen.move(chess_table, 5, 3)
+bishop.move(chess_table, 6, 3)
+knight.move(chess_table, 5, 2)
+king.castling_to_left(chess_table, 0)
 
+
+print(chess_table.c_table[7][0].piece_in_self)
+print(chess_table.c_table[7][1].piece_in_self)
+print(chess_table.c_table[7][2].piece_in_self)
+print(chess_table.c_table[7][3].piece_in_self)
 print(chess_table.c_table[7][4].piece_in_self)
-print(chess_table.c_table[7][5].piece_in_self)
-print(chess_table.c_table[7][6].piece_in_self)
-print(chess_table.c_table[7][7].piece_in_self)
