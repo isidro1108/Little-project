@@ -1,4 +1,8 @@
 from father_class.piece import Piece
+from pieces.queen import Queen
+from pieces.bishop import Bishop
+from pieces.knight import Knight
+from pieces.tower import Tower
 
 class Pawn(Piece):
     address = {'white': -1, 'black': 1}
@@ -50,6 +54,7 @@ class Pawn(Piece):
                 self.change_position(table, p1, p2)
                 self.movements = [(self.dir, 0)]
                 self.moves+= 1
+                self.to_crown(table)
             else:
                 print('El movimiento que ha insertado es invalido')
 
@@ -64,6 +69,7 @@ class Pawn(Piece):
                     f_piece, table.c_table[self.p1][self.p2].piece_in_self = self, None
                     self.change_position(table, p1, p2)
                     self.moves+= 1
+                    self.to_crown(table)
                 else:
                     print('Esta no es una pieza enemiga')
             else:
@@ -85,3 +91,10 @@ class Pawn(Piece):
                     print('Esta no es una pieza enemiga o no se puede capturar al paso')
             else:
                 print('Este no es un movimiento válido o no hay pieza para capturar')
+
+    def to_crown(self, table):
+        if self.p1 == 0 or self.p1 == 7:
+            crown_piece = Queen(self.color, self.p1, self.p2)
+            p1, p2 = self.p1, self.p2
+            table.c_table[p1][p2].piece_in_self = crown_piece
+            table.c_table[p1][p2].piece_in_self.set_control(table)
