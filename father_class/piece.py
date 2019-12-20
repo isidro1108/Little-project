@@ -28,6 +28,9 @@ class Piece:
         self.__quit_control(table)
         self.p1, self.p2 = p1, p2
         self.set_control(table)
+
+    def is_enemy_piece(self, piece):
+        return isinstance(piece, Piece) and piece.color != self.color
     
     def move(self, table, p1, p2):
         if table.move_is_inside(p1, p2):
@@ -44,8 +47,7 @@ class Piece:
             destiny = table.c_table[p1][p2]
             if self.move_in_movements(p1, p2) and not destiny.is_available():
                 f_piece = table.c_table[p1][p2].piece_in_self
-                is_enemy_piece = isinstance(f_piece, Piece) and f_piece.color != self.color
-                if is_enemy_piece:
+                if self.is_enemy_piece(f_piece):
                     f_piece.dead(table)
                     f_piece, table.c_table[self.p1][self.p2].piece_in_self = self, None
                     self.change_position(table, p1, p2)

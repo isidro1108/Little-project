@@ -63,8 +63,7 @@ class Pawn(Piece):
             destiny = table.c_table[p1][p2]
             if self.__move_in_c_movements(p1, p2) and not destiny.is_available():
                 f_piece = table.c_table[p1][p2].piece_in_self
-                is_enemy_piece = isinstance(f_piece, Piece) and f_piece.color != self.color
-                if is_enemy_piece:
+                if self.is_enemy_piece(f_piece):
                     f_piece.dead(table)
                     f_piece, table.c_table[self.p1][self.p2].piece_in_self = self, None
                     self.change_position(table, p1, p2)
@@ -81,8 +80,7 @@ class Pawn(Piece):
             c_destiny = table.c_table[p1 - self.dir][p2]
             f_piece = table.c_table[p1 - self.dir][p2].piece_in_self
             if self.__move_in_c_movements(p1, p2) and destiny.is_available() and not c_destiny.is_available():
-                is_enemy_piece = isinstance(f_piece, Piece) and f_piece.color != self.color
-                if is_enemy_piece and f_piece.p_step_capture:
+                if self.is_enemy_piece(f_piece) and f_piece.p_step_capture:
                     f_piece.dead(table)
                     c_destiny.piece_in_self, destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = None, self, None
                     self.change_position(table, p1, p2)
