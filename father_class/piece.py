@@ -12,17 +12,17 @@ class Piece:
 
     def set_control(self, table):
         for movement in self.movements:
-                p1, p2 = self.p1 + movement[0], self.p2 + movement[1]
-                if (p1 < 8 and p1 >= 0) and (p2 < 8 and p2 >= 0):
-                    table.c_table[p1][p2].controlled_by.append((type(self), self.color))
-                    self.controlled_boxes.append((p1, p2))
+            p1, p2 = self.p1 + movement[0], self.p2 + movement[1]
+            if (p1 < 8 and p1 >= 0) and (p2 < 8 and p2 >= 0):
+                table.c_table[p1][p2].controlled_by.append((type(self), self.color))
+                self.controlled_boxes.append((p1, p2))
     
     def __quit_control(self, table):
         for movement in self.movements:
-                p1, p2 = self.p1 + movement[0], self.p2 + movement[1]
-                if (p1 < 8 and p1 >= 0) and (p2 < 8 and p2 >= 0):
-                    table.c_table[p1][p2].controlled_by.remove((type(self), self.color))
-                    self.controlled_boxes = []
+            p1, p2 = self.p1 + movement[0], self.p2 + movement[1]
+            if (p1 < 8 and p1 >= 0) and (p2 < 8 and p2 >= 0):
+                table.c_table[p1][p2].controlled_by.remove((type(self), self.color))
+                self.controlled_boxes = []
     
     def change_position(self, table, p1, p2):
         self.__quit_control(table)
