@@ -32,6 +32,9 @@ class Piece:
     def is_enemy_piece(self, piece):
         return isinstance(piece, Piece) and piece.color != self.color
     
+    def is_friend_piece(self, piece):
+        return isinstance(piece, Piece) and piece.color == self.color
+    
     def move(self, table, p1, p2):
         if table.move_is_inside(p1, p2):
             destiny = table.c_table[p1][p2]
