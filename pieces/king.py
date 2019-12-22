@@ -1,8 +1,6 @@
 from father_class.piece import Piece
 
 class King(Piece):
-    # symbols = ['♚','♔']
-
     def __init__(self, color, p1, p2):
         Piece.__init__(self, color, p1, p2)
         self.in_check = False

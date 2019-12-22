@@ -1,8 +1,6 @@
 from father_class.mpiece import Mpiece
 
 class Bishop(Mpiece):
-    # symbols = ['♝','♗']
-
     def __init__(self, color, p1, p2):
         Mpiece.__init__(self, color, p1, p2)
         self.dir_movements = [(-1, -1), (1, 1), (-1, 1), (1, -1)]

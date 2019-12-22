@@ -1,8 +1,6 @@
 from father_class.mpiece import Mpiece
 
 class Tower(Mpiece):
-    # symbols = ['♜','♖']
-
     def __init__(self, color, p1, p2):
         Mpiece.__init__(self, color, p1, p2)
         self.dir_movements = [(1, 0), (0, 1), (-1, 0), (0, -1)]

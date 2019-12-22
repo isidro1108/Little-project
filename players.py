@@ -1,6 +1,4 @@
 from table_and_box.table import Table
-from table_and_box.box import Box
-from father_class.piece import Piece
 from pieces.king import King
 from pieces.queen import Queen
 from pieces.bishop import Bishop
@@ -104,37 +102,37 @@ player2 = Player2('Yoliber')
 player1.insert_pieces(chess_table)
 player2.insert_pieces(chess_table)
 
-index = 0
+index = 8
 for row in chess_table.c_table:
     pieces = ''
     for box in row:
         piece = box.piece_in_self
         if piece == None:
-            pieces+= '[ ]'
+            pieces+= '[  ]'
         elif isinstance(piece, Tower) and piece.color == 'white':
-            pieces+= '[T]'
+            pieces+= '[♜ ]'
         elif isinstance(piece, Knight) and piece.color == 'white':
-            pieces+= '[H]'
+            pieces+= '[♞ ]'
         elif isinstance(piece, Bishop) and piece.color == 'white':
-            pieces+= '[B]'
+            pieces+= '[♝ ]'
         elif isinstance(piece, Queen) and piece.color == 'white':
-            pieces+= '[Q]'
+            pieces+= '[♛ ]'
         elif isinstance(piece, King) and piece.color == 'white':
-            pieces+= '[K]'
+            pieces+= '[♚ ]'
         elif isinstance(piece, Pawn) and piece.color == 'white':
-            pieces+= '[P]'
+            pieces+= '[♟ ]'
         elif isinstance(piece, Tower) and piece.color == 'black':
-            pieces+= '[t]'
+            pieces+= '[♖ ]'
         elif isinstance(piece, Knight) and piece.color == 'black':
-            pieces+= '[h]'
+            pieces+= '[♘ ]'
         elif isinstance(piece, Bishop) and piece.color == 'black':
-            pieces+= '[b]'
+            pieces+= '[♗ ]'
         elif isinstance(piece, Queen) and piece.color == 'black':
-            pieces+= '[q]'
+            pieces+= '[♕ ]'
         elif isinstance(piece, King) and piece.color == 'black':
-            pieces+= '[k]'
+            pieces+= '[♔ ]'
         elif isinstance(piece, Pawn) and piece.color == 'black':
-            pieces+= '[p]'
+            pieces+= '[♙ ]'
     print(index, pieces)
-    index+= 1
-print('   0  1  2  3  4  5  6  7')
+    index-= 1
+print('   a   b   c   d   e   f   g   h')
