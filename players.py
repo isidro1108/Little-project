@@ -19,37 +19,55 @@ class Player:
             piece.g_all_movements()
             piece.set_control(table)
 
+    def is_my_piece(self, piece):
+        return piece.color == self.pieces[-1].color
+
     def move(self, table, p1, p2, pd1, pd2):
         piece = table.c_table[p1][p2].piece_in_self
-        piece.move(table, pd1, pd2)
-        piece.update(table)
+        if self.is_my_piece(piece):
+            piece.move(table, pd1, pd2)
+            piece.update(table)
+        else:
+            print('Esta no es tu pieza')
     
     def capture(self, table, p1, p2, pd1, pd2):
         piece = table.c_table[p1][p2].piece_in_self
-        piece.capture(table, pd1, pd2)
-        piece.update(table)
+        if self.is_my_piece(piece):
+            piece.capture(table, pd1, pd2)
+            piece.update(table)
+        else:
+            print('Esta no es tu pieza')
 
     def step_capture(self, table, p1, p2, pd1, pd2):
         piece = table.c_table[p1][p2].piece_in_self
         if isinstance(piece, Pawn):
-            piece.step_capture(table, pd1, pd2)
-            piece.update(table)
+            if self.is_my_piece(piece):
+                piece.step_capture(table, pd1, pd2)
+                piece.update(table)
+            else:
+                print('Esta no es tu pieza')
         else:
             print('Esta pieza no es un peón')
     
     def castling_to_left(self, table, p1, p2):
         piece = table.c_table[p1][p2].piece_in_self
         if isinstance(piece, King):
-            piece.castling_to_left(table)
-            piece.update(table)
+            if self.is_my_piece(piece):
+                piece.castling_to_left(table)
+                piece.update(table)
+            else:
+                print('Esta no es tu pieza')
         else:
             print('Esta pieza no es un rey')
     
     def castling_to_right(self, table, p1, p2):
         piece = table.c_table[p1][p2].piece_in_self
         if isinstance(piece, King):
-            piece.castling_to_right(table)
-            piece.update(table)
+            if self.is_my_piece(piece):
+                piece.castling_to_right(table)
+                piece.update(table)
+            else:
+                print('Esta no es tu pieza')
         else:
             print('Esta pieza no es un rey')
 
@@ -85,6 +103,9 @@ player2 = Player2('Yoliber')
 
 player1.insert_pieces(chess_table)
 player2.insert_pieces(chess_table)
+
+player1.move(chess_table, 6, 4, 4, 4)
+player1.move(chess_table, 1, 4, 3, 4)
 
 index = 0
 for row in chess_table.c_table:
