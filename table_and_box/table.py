@@ -1,4 +1,4 @@
-from box import Box
+from table_and_box.box import Box
 
 class Table:
     def __init__(self):

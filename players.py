@@ -1,5 +1,5 @@
-from table import Table
-from box import Box
+from table_and_box.table import Table
+from table_and_box.box import Box
 from father_class.piece import Piece
 from pieces.king import King
 from pieces.queen import Queen
@@ -103,16 +103,6 @@ player2 = Player2('Yoliber')
 
 player1.insert_pieces(chess_table)
 player2.insert_pieces(chess_table)
-
-player1.move(chess_table, 6, 4, 4, 4)
-player1.move(chess_table, 6, 3, 4, 3)
-player1.move(chess_table, 7, 6, 5, 5)
-player1.move(chess_table, 7, 1, 5, 2)
-player1.move(chess_table, 7, 5, 4, 2)
-player1.move(chess_table, 7, 2, 4, 5)
-player1.move(chess_table, 7, 3, 5, 3)
-player1.castling_to_left(chess_table, 7, 4)
-player1.move(chess_table, 7, 7, 7, 4)
 
 index = 0
 for row in chess_table.c_table:
