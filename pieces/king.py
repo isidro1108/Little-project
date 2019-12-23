@@ -14,9 +14,8 @@ class King(Piece):
             box = table.c_table[p1][p2]
             if not box.is_available():
                 return False
-            for p in box.controlled_by:
-                if p[1] != self.color:
-                    return False
+            if self.is_controlled(table, p1, p2):
+                return False
         return True
     
     def __v_left_boxes(self, table):
@@ -25,9 +24,8 @@ class King(Piece):
             box = table.c_table[p1][p2]
             if not box.is_available():
                 return False
-            for p in box.controlled_by:
-                if p[1] != self.color:
-                    return False
+            if self.is_controlled(table, p1, p2):
+                return False
         return True
 
     
@@ -66,3 +64,41 @@ class King(Piece):
                 print('Una de las piezas que hacen el enroque se ha movido')
         else:
             print('El rey no puede hacer el enroque')
+
+    def is_controlled(self, table, p1, p2):
+        box = table.c_table[p1][p2]
+        for p in box.controlled_by:
+            if p[1] != self.color:
+                return True
+        return False
+
+    def move(self, table, p1, p2):
+        if table.move_is_inside(p1, p2):
+            destiny = table.c_table[p1][p2]
+            if self.move_in_movements(p1, p2) and destiny.is_available():
+                if not self.is_controlled(table, p1, p2):
+                    destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
+                    self.change_position(table, p1, p2)
+                    self.moves+= 1
+                else:
+                    print('La casilla está controlada por una pieza enemiga')
+            else:
+                print('El movimiento que ha insertado es invalido')
+
+    def capture(self, table, p1, p2):
+        if table.move_is_inside(p1, p2):
+            destiny = table.c_table[p1][p2]
+            if self.move_in_movements(p1, p2) and not destiny.is_available():
+                f_piece = table.c_table[p1][p2].piece_in_self
+                if self.is_enemy_piece(f_piece):
+                    if not self.is_controlled(table, p1, p2):
+                        f_piece.dead(table)
+                        destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
+                        self.change_position(table, p1, p2)
+                        self.moves+= 1
+                    else:
+                        print('La pieza está protegida')
+                else:
+                    print('Esta no es una pieza enemiga')
+            else:
+                print('Este no es un movimiento válido o no hay pieza para capturar')
