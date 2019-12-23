@@ -9,6 +9,7 @@ class Pawn(Piece):
 
     def __init__(self, color, p1, p2):
         Piece.__init__(self, color, p1, p2)
+        self.value = 1
         self.dir = self.address[self.color]
         self.movements = [(self.dir, 0), (2 * self.dir, 0)]
         self.c_movements = [(self.dir, -1), (self.dir, 1)]

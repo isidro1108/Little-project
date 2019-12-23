@@ -3,6 +3,7 @@ from father_class.mpiece import Mpiece
 class Bishop(Mpiece):
     def __init__(self, color, p1, p2):
         Mpiece.__init__(self, color, p1, p2)
+        self.value = 3
         self.dir_movements = [(-1, -1), (1, 1), (-1, 1), (1, -1)]
         self.movements = [(-1, -1), (1, 1), (-1, 1), (1, -1)]
 

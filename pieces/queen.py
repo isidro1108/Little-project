@@ -5,6 +5,7 @@ from pieces.tower import Tower
 class Queen(Mpiece):
     def __init__(self, color, p1, p2):
         Mpiece.__init__(self, color, p1, p2)
+        self.value = 9
         self.dir_movements = [(1, 1), (-1, -1), (1, -1), (-1, 1),
                             (1, 0), (-1, 0), (0, 1), (0, -1)]
         self.movements = [(1, 1), (-1, -1), (1, -1), (-1, 1),

@@ -3,6 +3,7 @@ class Piece:
         self.color = color
         self.p1 = p1
         self.p2 = p2
+        self.value = None
         self.moves = 0
         self.movements = []
         self.controlled_boxes = []
