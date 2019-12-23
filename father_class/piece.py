@@ -14,6 +14,24 @@ class Piece:
     def g_all_movements(self):
         pass
 
+    def is_controlled(self, table, p1, p2):
+        box = table.c_table[p1][p2]
+        for p in box.controlled_by:
+            if p[1] != self.color:
+                return True
+        return False
+
+    def v_kings(self, table):
+        for row in table.c_table:
+            for box in row:
+                piece = box.piece_in_self
+                if isinstance(piece, Piece):
+                    if piece.value == None:
+                        if piece.is_controlled(table, piece.p1, piece.p2):
+                            piece.in_check = True
+                        else:
+                            piece.in_check = False
+
     def update(self, table):
         for row in table.c_table:
             for box in row:
@@ -21,6 +39,7 @@ class Piece:
                 if isinstance(piece, Piece):
                     piece.quit_control(table)
                     piece.set_control(table)
+        self.v_kings(table)
 
     def set_control(self, table):
         for movement in self.movements:

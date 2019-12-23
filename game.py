@@ -9,7 +9,14 @@ player2 = Player2('Michael')
 player1.insert_pieces(chess_table)
 player2.insert_pieces(chess_table)
 
+# player1.move(chess_table, 6, 4, 4, 4)
+# player2.move(chess_table, 1, 4, 3, 4)
+# player1.move(chess_table, 7, 5, 4, 2)
+# player2.move(chess_table, 0, 6, 2, 5)
+# player1.capture(chess_table, 4, 2, 1, 5)
+# player2.capture(chess_table, 0, 4, 1, 5)
 
+# print(chess_table.c_table[1][5].piece_in_self.in_check)
 
 index = 0
 for row in chess_table.c_table:
