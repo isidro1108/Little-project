@@ -49,6 +49,7 @@ class Mpiece(Piece):
             if self.move_in_movements(p1, p2) and destiny.is_available():
                 v_boxes = self.v_boxes(table, self.p1, self.p2, p1, p2)
                 if (p1, p2) in v_boxes:
+                    table.movement_log.append([(self.p1, self.p2), (p1, p2)])
                     destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
                     self.change_position(table, p1, p2)
                     self.moves+= 1
@@ -65,6 +66,7 @@ class Mpiece(Piece):
                 if self.is_enemy_piece(f_piece):
                     v_boxes = self.v_boxes(table, self.p1, self.p2, p1, p2)
                     if (p1, p2) in v_boxes:
+                        table.movement_log.append([(self.p1, self.p2), (p1, p2)])
                         f_piece.dead(table)
                         destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
                         self.change_position(table, p1, p2)
