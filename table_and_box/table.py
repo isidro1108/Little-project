@@ -3,6 +3,7 @@ from table_and_box.box import Box
 class Table:
     def __init__(self):
         self.c_table = []
+        self.movement_log = []
         self.repository = []
     
     def create(self, turn_row = 1):
