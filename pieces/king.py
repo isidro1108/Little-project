@@ -67,6 +67,12 @@ class King(Piece):
         else:
             print('El rey no puede hacer el enroque')
 
+    def change_position(self, table, p1, p2):
+        self.quit_control(table)
+        self.p1, self.p2 = p1, p2
+        table.pos_kings[self.color] = (p1, p2)
+        self.set_control(table)
+
     def move(self, table, p1, p2):
         if table.move_is_inside(p1, p2):
             destiny = table.c_table[p1][p2]

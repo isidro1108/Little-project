@@ -5,6 +5,7 @@ class Table:
         self.c_table = []
         self.movement_log = []
         self.repository = []
+        self.pos_kings = {'white': (7, 4), 'black': (0, 4)}
     
     def create(self, turn_row = 1):
         p1 = turn_row - 1
@@ -24,16 +25,15 @@ class Table:
     
     def move_is_inside(self, p1, p2):
         return (p1 < 8 and p1 >= 0) and (p2 < 8 and p2 >= 0)
-
-    def v_kings(self, piece):
-        for row in self.c_table:
-            for box in row:
-                piece = box.piece_in_self
-                if piece != None and piece.value == None:
-                    if box.is_controlled(piece):
-                        piece.in_check = True
-                    else:
-                        piece.in_check = False
+    
+    def v_kings(self):
+        for king in self.pos_kings:
+            p = self.pos_kings[king]
+            piece = self.c_table[p[0]][p[1]].piece_in_self
+            if self.c_table[p[0]][p[1]].is_controlled(piece):
+                piece.in_check = True
+            else:
+                piece.in_check = False
 
     def update(self):
         for row in self.c_table:
@@ -42,4 +42,4 @@ class Table:
                 if piece != None:
                     piece.quit_control(self)
                     piece.set_control(self)
-        self.v_kings(self)
+        self.v_kings()
