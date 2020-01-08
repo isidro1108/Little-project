@@ -1,4 +1,4 @@
-from table_and_box.table import Table
+from table_things.table import Table
 from pieces.king import King
 from pieces.queen import Queen
 from pieces.bishop import Bishop
