@@ -13,6 +13,7 @@ player1.move(chess_table, 6, 4, 4, 4)
 player2.move(chess_table, 1, 4, 3, 4)
 player1.move(chess_table, 6, 5, 5, 5)
 player2.move(chess_table, 0, 3, 4, 7)
+# player1.move(chess_table, 7, 4, 6, 4)
 
 # print(chess_table.c_table[7][4].piece_in_self.in_check)
 print(player1.pieces[8].in_check)

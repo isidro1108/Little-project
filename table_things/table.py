@@ -37,7 +37,7 @@ class Table:
             for box in row:
                 piece = box.piece_in_self
                 if piece != None and piece.value == None:
-                    if piece.is_controlled(self, piece.p1, piece.p2):
+                    if self.is_controlled(piece, piece.p1, piece.p2):
                         piece.in_check = True
                     else:
                         piece.in_check = False
