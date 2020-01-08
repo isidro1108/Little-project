@@ -18,13 +18,13 @@ class Player:
             piece.set_control(table)
 
     def is_my_piece(self, piece):
-        return piece.color == self.pieces[-1].color
+        return piece in self.pieces
 
     def move(self, table, p1, p2, pd1, pd2):
         piece = table.c_table[p1][p2].piece_in_self
         if self.is_my_piece(piece):
             piece.move(table, pd1, pd2)
-            piece.update(table)
+            table.update()
         else:
             print('Esta no es tu pieza')
     
@@ -32,7 +32,7 @@ class Player:
         piece = table.c_table[p1][p2].piece_in_self
         if self.is_my_piece(piece):
             piece.capture(table, pd1, pd2)
-            piece.update(table)
+            table.update()
         else:
             print('Esta no es tu pieza')
 
@@ -41,7 +41,7 @@ class Player:
         if isinstance(piece, Pawn):
             if self.is_my_piece(piece):
                 piece.step_capture(table, pd1, pd2)
-                piece.update(table)
+                table.update()
             else:
                 print('Esta no es tu pieza')
         else:
@@ -52,7 +52,7 @@ class Player:
         if isinstance(piece, King):
             if self.is_my_piece(piece):
                 piece.castling_to_left(table)
-                piece.update(table)
+                table.update()
             else:
                 print('Esta no es tu pieza')
         else:
@@ -63,7 +63,7 @@ class Player:
         if isinstance(piece, King):
             if self.is_my_piece(piece):
                 piece.castling_to_right(table)
-                piece.update(table)
+                table.update()
             else:
                 print('Esta no es tu pieza')
         else:

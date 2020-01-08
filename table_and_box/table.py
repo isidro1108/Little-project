@@ -24,3 +24,29 @@ class Table:
     
     def move_is_inside(self, p1, p2):
         return (p1 < 8 and p1 >= 0) and (p2 < 8 and p2 >= 0)
+
+    def is_controlled(self, piece, p1, p2):
+        box = self.c_table[p1][p2]
+        for p in box.controlled_by:
+            if p[1] != piece.color:
+                return True
+        return False
+
+    def v_kings(self, piece):
+        for row in self.c_table:
+            for box in row:
+                piece = box.piece_in_self
+                if piece != None and piece.value == None:
+                    if piece.is_controlled(self, piece.p1, piece.p2):
+                        piece.in_check = True
+                    else:
+                        piece.in_check = False
+
+    def update(self):
+        for row in self.c_table:
+            for box in row:
+                piece = box.piece_in_self
+                if piece != None:
+                    piece.quit_control(self)
+                    piece.set_control(self)
+        self.v_kings(self)
