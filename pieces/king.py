@@ -71,7 +71,7 @@ class King(Piece):
         if table.move_is_inside(p1, p2):
             destiny = table.c_table[p1][p2]
             if self.move_in_movements(p1, p2) and destiny.is_available():
-                if not table.is_controlled(self, p1, p2):
+                if not destiny.is_controlled(self):
                     table.movement_log.append([(self.p1, self.p2), (p1, p2)])
                     destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
                     self.change_position(table, p1, p2)
@@ -87,7 +87,7 @@ class King(Piece):
             if self.move_in_movements(p1, p2) and not destiny.is_available():
                 f_piece = table.c_table[p1][p2].piece_in_self
                 if self.is_enemy_piece(f_piece):
-                    if not table.is_controlled(table, p1, p2):
+                    if not destiny.is_controlled(self):
                         table.movement_log.append([(self.p1, self.p2), (p1, p2)])
                         f_piece.dead(table)
                         destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None

@@ -8,3 +8,9 @@ class Box:
     
     def is_available(self):
         return self.piece_in_self == None
+
+    def is_controlled(self, piece):
+        for p in self.controlled_by:
+            if p[1] != piece.color:
+                return True
+        return False
