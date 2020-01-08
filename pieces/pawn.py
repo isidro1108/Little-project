@@ -1,10 +1,15 @@
 from father_class.piece import Piece
+from pieces.queen import Queen
+from pieces.bishop import Bishop
+from pieces.knight import Knight
+from pieces.tower import Tower
 
 class Pawn(Piece):
     address = {'white': -1, 'black': 1}
 
     def __init__(self, color, p1, p2):
         Piece.__init__(self, color, p1, p2)
+        self.value = 1
         self.dir = self.address[self.color]
         self.movements = [(self.dir, 0), (2 * self.dir, 0)]
         self.c_movements = [(self.dir, -1), (self.dir, 1)]
@@ -18,15 +23,22 @@ class Pawn(Piece):
 
     def set_control(self, table):
         for movement in self.c_movements:
-                p1, p2 = self.p1 + movement[0], self.p2 + movement[1]
-                if (p1 < 8 and p1 >= 0) and (p2 < 8 and p2 >= 0):
-                    table.c_table[p1][p2].controlled_by.append((type(self), self.color))
+            p1, p2 = self.p1 + movement[0], self.p2 + movement[1]
+            if table.move_is_inside(p1, p2):
+                table.c_table[p1][p2].controlled_by.append((type(self), self.color))
+                self.controlled_boxes.append((p1, p2))
     
-    def __quit_control(self, table):
+    def quit_control(self, table):
         for movement in self.c_movements:
-                p1, p2 = self.p1 + movement[0], self.p2 + movement[1]
-                if (p1 < 8 and p1 >= 0) and (p2 < 8 and p2 >= 0):
-                    table.c_table[p1][p2].controlled_by.remove((type(self), self.color))
+            p1, p2 = self.p1 + movement[0], self.p2 + movement[1]
+            if table.move_is_inside(p1, p2):
+                table.c_table[p1][p2].controlled_by.remove((type(self), self.color))
+        self.controlled_boxes = []
+    
+    def change_position(self, table, p1, p2):
+        self.quit_control(table)
+        self.p1, self.p2 = p1, p2
+        self.set_control(table)
     
     def move(self, table, p1, p2):
         if table.move_is_inside(p1, p2):
@@ -39,12 +51,12 @@ class Pawn(Piece):
                     self.p_step_capture = True
                 else:
                     self.p_step_capture = False
+                table.movement_log.append([(self.p1, self.p2), (p1, p2)])
                 destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
-                self.__quit_control(table)
-                self.p1, self.p2 = p1, p2
-                self.set_control(table)
+                self.change_position(table, p1, p2)
                 self.movements = [(self.dir, 0)]
                 self.moves+= 1
+                self.to_crown(table)
             else:
                 print('El movimiento que ha insertado es invalido')
 
@@ -53,14 +65,13 @@ class Pawn(Piece):
             destiny = table.c_table[p1][p2]
             if self.__move_in_c_movements(p1, p2) and not destiny.is_available():
                 f_piece = table.c_table[p1][p2].piece_in_self
-                is_enemy_piece = isinstance(f_piece, Piece) and f_piece.color != self.color
-                if is_enemy_piece:
-                    table.repository.append(f_piece)
-                    f_piece, table.c_table[self.p1][self.p2].piece_in_self = self, None
-                    self.__quit_control(table)
-                    self.p1, self.p2 = p1, p2
-                    self.set_control(table)
+                if self.is_enemy_piece(f_piece):
+                    table.movement_log.append([(self.p1, self.p2), (p1, p2)])
+                    f_piece.dead(table)
+                    destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
+                    self.change_position(table, p1, p2)
                     self.moves+= 1
+                    self.to_crown(table)
                 else:
                     print('Esta no es una pieza enemiga')
             else:
@@ -72,15 +83,20 @@ class Pawn(Piece):
             c_destiny = table.c_table[p1 - self.dir][p2]
             f_piece = table.c_table[p1 - self.dir][p2].piece_in_self
             if self.__move_in_c_movements(p1, p2) and destiny.is_available() and not c_destiny.is_available():
-                is_enemy_piece = isinstance(f_piece, Piece) and f_piece.color != self.color
-                if is_enemy_piece and f_piece.p_step_capture:
-                    table.repository.append(f_piece)
+                if self.is_enemy_piece(f_piece) and f_piece.p_step_capture:
+                    table.movement_log.append([(self.p1, self.p2), (p1, p2)])
+                    f_piece.dead(table)
                     c_destiny.piece_in_self, destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = None, self, None
-                    self.__quit_control(table)
-                    self.p1, self.p2 = p1, p2
-                    self.set_control(table)
+                    self.change_position(table, p1, p2)
                     self.moves+= 1
                 else:
                     print('Esta no es una pieza enemiga o no se puede capturar al paso')
             else:
                 print('Este no es un movimiento válido o no hay pieza para capturar')
+
+    def to_crown(self, table):
+        if self.p1 == 0 or self.p1 == 7:
+            crown_piece = Queen(self.color, self.p1, self.p2)
+            p1, p2 = self.p1, self.p2
+            table.c_table[p1][p2].piece_in_self = crown_piece
+            table.c_table[p1][p2].piece_in_self.set_control(table)
