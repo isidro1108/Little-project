@@ -54,23 +54,25 @@ class Player:
         piece = table.c_table[p1][p2].piece_in_self
         if isinstance(piece, King):
             if self.is_my_piece(piece):
-                piece.castling_to_left(table)
+                move = piece.castling_to_left(table)
                 table.update()
-            else:
-                print('Esta no es tu pieza')
-        else:
-            print('Esta pieza no es un rey')
+                return move
+            print('Esta no es tu pieza')
+            return False
+        print('Esta pieza no es un rey')
+        return False
     
     def castling_to_right(self, table, p1, p2):
         piece = table.c_table[p1][p2].piece_in_self
         if isinstance(piece, King):
             if self.is_my_piece(piece):
-                piece.castling_to_right(table)
+                move = piece.castling_to_right(table)
                 table.update()
-            else:
-                print('Esta no es tu pieza')
-        else:
-            print('Esta pieza no es un rey')
+                return move
+            print('Esta no es tu pieza')
+            return False
+        print('Esta pieza no es un rey')
+        return False
 
 class Player1(Player):
     def __init__(self, name):

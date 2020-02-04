@@ -43,10 +43,11 @@ class King(Piece):
                 tower.change_position(table, p1, p2 - 1)
                 self.moves+= 1
                 tower.moves+= 1
-            else:
-                print('Una de las piezas que hacen el enroque se ha movido')
-        else:
-            print('El rey no puede hacer el enroque')
+                return True
+            print('Una de las piezas que hacen el enroque se ha movido')
+            return False
+        print('El rey no puede hacer el enroque')
+        return False
 
     def castling_to_left(self, table):
         if self.__v_left_boxes(table) and not table.c_table[self.p1][0].is_available():
@@ -62,10 +63,11 @@ class King(Piece):
                 tower.change_position(table, p1, p2 + 1)
                 self.moves+= 1
                 tower.moves+= 1
-            else:
-                print('Una de las piezas que hacen el enroque se ha movido')
-        else:
-            print('El rey no puede hacer el enroque')
+                return True
+            print('Una de las piezas que hacen el enroque se ha movido')
+            return False
+        print('El rey no puede hacer el enroque')
+        return False
 
     def change_position(self, table, p1, p2):
         self.quit_control(table)
