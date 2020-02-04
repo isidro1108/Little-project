@@ -23,10 +23,12 @@ class Player:
     def move(self, table, p1, p2, pd1, pd2):
         piece = table.c_table[p1][p2].piece_in_self
         if self.is_my_piece(piece):
-            piece.move(table, pd1, pd2)
+            move = piece.move(table, pd1, pd2)
             table.update()
+            return move
         else:
             print('Esta no es tu pieza')
+            return False
     
     def capture(self, table, p1, p2, pd1, pd2):
         piece = table.c_table[p1][p2].piece_in_self

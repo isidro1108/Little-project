@@ -46,7 +46,7 @@ class Pawn(Piece):
             if self.move_in_movements(p1, p2) and destiny.is_available():
                 if self.__is_two_step(p1, p2) and not table.c_table[p1 - self.dir][p2].is_available():
                     print('El peon no puede pasar por encima de sus fichas')
-                    return
+                    return False
                 if self.__is_two_step(p1, p2):
                     self.p_step_capture = True
                 else:
@@ -57,8 +57,10 @@ class Pawn(Piece):
                 self.movements = [(self.dir, 0)]
                 self.moves+= 1
                 self.to_crown(table)
-            else:
-                print('El movimiento que ha insertado es invalido')
+                return True
+            print('El movimiento que ha insertado es invalido')
+            return False
+        return False
 
     def capture(self, table, p1, p2):
         if table.move_is_inside(p1, p2):

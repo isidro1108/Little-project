@@ -44,8 +44,10 @@ class Piece:
                 destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
                 self.change_position(table, p1, p2)
                 self.moves+= 1
-            else:
-                print('El movimiento que ha insertado es invalido')
+                return True
+            print('El movimiento que ha insertado es invalido')
+            return False
+        return False
 
     def capture(self, table, p1, p2):
         if table.move_is_inside(p1, p2):

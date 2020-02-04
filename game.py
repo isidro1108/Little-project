@@ -10,15 +10,9 @@ player1.insert_pieces(chess_table)
 player2.insert_pieces(chess_table)
 
 player1.move(chess_table, 6, 4, 4, 4)
-player2.move(chess_table, 1, 4, 3, 4)
-player1.move(chess_table, 6, 5, 5, 5)
-player2.move(chess_table, 0, 3, 4, 7)
-# player1.move(chess_table, 7, 4, 6, 4)
+print(chess_table.c_table[3][1].controlled_by)
 
-# print(chess_table.c_table[7][4].piece_in_self.in_check)
-print(player1.pieces[8].in_check)
-
-index = 0
+index = 8
 for row in chess_table.c_table:
     pieces = ''
     for box in row:
@@ -50,5 +44,5 @@ for row in chess_table.c_table:
         elif isinstance(piece, Pawn) and piece.color == 'black':
             pieces+= '[♙ ]'
     print(index, pieces)
-    index+= 1
-print('   0   1   2   3   4   5   6   7')
+    index-= 1
+print('   a   b   c   d   e   f   g   h')
