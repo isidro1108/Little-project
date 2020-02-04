@@ -42,12 +42,13 @@ class Player:
         piece = table.c_table[p1][p2].piece_in_self
         if isinstance(piece, Pawn):
             if self.is_my_piece(piece):
-                piece.step_capture(table, pd1, pd2)
+                move = piece.step_capture(table, pd1, pd2)
                 table.update()
-            else:
-                print('Esta no es tu pieza')
-        else:
-            print('Esta pieza no es un peón')
+                return move
+            print('Esta no es tu pieza')
+            return False
+        print('Esta pieza no es un peón')
+        return False
     
     def castling_to_left(self, table, p1, p2):
         piece = table.c_table[p1][p2].piece_in_self
