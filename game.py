@@ -10,7 +10,8 @@ player1.insert_pieces(chess_table)
 player2.insert_pieces(chess_table)
 
 player1.move(chess_table, 6, 4, 4, 4)
-print(chess_table.c_table[3][1].controlled_by)
+player2.move(chess_table, 1, 3, 3, 3)
+player1.capture(chess_table, 4, 4, 3, 3)
 
 index = 8
 for row in chess_table.c_table:

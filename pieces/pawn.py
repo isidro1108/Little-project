@@ -74,10 +74,12 @@ class Pawn(Piece):
                     self.change_position(table, p1, p2)
                     self.moves+= 1
                     self.to_crown(table)
-                else:
-                    print('Esta no es una pieza enemiga')
-            else:
-                print('Este no es un movimiento válido o no hay pieza para capturar')
+                    return True
+                print('Esta no es una pieza enemiga')
+                return False
+            print('Este no es un movimiento válido o no hay pieza para capturar')
+            return False
+        return False
         
     def step_capture(self, table, p1, p2):
         if table.move_is_inside(p1, p2):

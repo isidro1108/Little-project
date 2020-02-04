@@ -101,9 +101,11 @@ class King(Piece):
                         destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
                         self.change_position(table, p1, p2)
                         self.moves+= 1
-                    else:
-                        print('La pieza está protegida')
-                else:
-                    print('Esta no es una pieza enemiga')
-            else:
-                print('Este no es un movimiento válido o no hay pieza para capturar')
+                        return True
+                    print('La pieza está protegida')
+                    return False
+                print('Esta no es una pieza enemiga')
+                return False
+            print('Este no es un movimiento válido o no hay pieza para capturar')
+            return False
+        return False
