@@ -9,10 +9,16 @@ player2 = Player2('Michael')
 player1.insert_pieces(chess_table)
 player2.insert_pieces(chess_table)
 
-print(player1.move(chess_table, 6, 4, 4, 4))
-print(player1.move(chess_table, 4, 4, 3, 4))
-print(player2.move(chess_table, 1, 3, 3, 3))
-print(player1.step_capture(chess_table, 3, 4, 2, 3))
+player1.move(chess_table, 6, 3, 4, 3)
+player1.move(chess_table, 7, 1, 5, 2)
+player1.move(chess_table, 7, 2, 4, 5)
+player1.move(chess_table, 7, 3, 5, 3)
+player2.move(chess_table, 1, 4, 3, 4)
+player2.move(chess_table, 0, 3, 3, 6)
+player2.capture(chess_table, 3, 6, 4, 5)
+# player2.move(chess_table, 4, 5, 6, 3)
+player2.capture(chess_table, 4, 5, 6, 5)
+player1.castling_to_left(chess_table)
 
 index = 8
 for row in chess_table.c_table:

@@ -50,8 +50,9 @@ class Player:
         print('Esta pieza no es un peón')
         return False
     
-    def castling_to_left(self, table, p1, p2):
-        piece = table.c_table[p1][p2].piece_in_self
+    def castling_to_left(self, table):
+        p1 = table.pos_kings[self.pieces[0].color][0]
+        piece = table.c_table[p1][4].piece_in_self
         if isinstance(piece, King):
             if self.is_my_piece(piece):
                 move = piece.castling_to_left(table)
@@ -62,8 +63,9 @@ class Player:
         print('Esta pieza no es un rey')
         return False
     
-    def castling_to_right(self, table, p1, p2):
-        piece = table.c_table[p1][p2].piece_in_self
+    def castling_to_right(self, table):
+        p1 = table.pos_kings[self.pieces[0].color][0]
+        piece = table.c_table[p1][4].piece_in_self
         if isinstance(piece, King):
             if self.is_my_piece(piece):
                 move = piece.castling_to_right(table)

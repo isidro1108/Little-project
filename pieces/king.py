@@ -14,7 +14,7 @@ class King(Piece):
             box = table.c_table[p1][p2]
             if not box.is_available():
                 return False
-            if table.is_controlled(self, p1, p2):
+            if box.is_controlled(self):
                 return False
         return True
     
@@ -24,47 +24,53 @@ class King(Piece):
             box = table.c_table[p1][p2]
             if not box.is_available():
                 return False
-            if table.is_controlled(self, p1, p2):
+            if box.is_controlled(self):
                 return False
         return True
 
     
     def castling_to_right(self, table):
         if self.__v_right_boxes(table) and not table.c_table[self.p1][7].is_available():
-            p1, p2 = self.p1, self.p2 + 2
-            destiny = table.c_table[p1][p2]
-            tower = table.c_table[p1][7].piece_in_self
-            destiny_t = table.c_table[p1][p2 - 1]
-            if tower.moves == 0 and self.moves == 0:
-                table.movement_log.append(['0 - 0'])
-                destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
-                destiny_t.piece_in_self, table.c_table[p1][7].piece_in_self = tower, None
-                self.change_position(table, p1, p2)
-                tower.change_position(table, p1, p2 - 1)
-                self.moves+= 1
-                tower.moves+= 1
-                return True
-            print('Una de las piezas que hacen el enroque se ha movido')
+            if self.in_check == False:
+                p1, p2 = self.p1, self.p2 + 2
+                destiny = table.c_table[p1][p2]
+                tower = table.c_table[p1][7].piece_in_self
+                destiny_t = table.c_table[p1][p2 - 1]
+                if tower.moves == 0 and self.moves == 0:
+                    table.movement_log.append(['0 - 0'])
+                    destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
+                    destiny_t.piece_in_self, table.c_table[p1][7].piece_in_self = tower, None
+                    self.change_position(table, p1, p2)
+                    tower.change_position(table, p1, p2 - 1)
+                    self.moves+= 1
+                    tower.moves+= 1
+                    return True
+                print('Una de las piezas que hacen el enroque se ha movido')
+                return False
+            print('El Rey está en jaque')
             return False
         print('El rey no puede hacer el enroque')
         return False
 
     def castling_to_left(self, table):
         if self.__v_left_boxes(table) and not table.c_table[self.p1][0].is_available():
-            p1, p2 = self.p1, self.p2 - 2
-            destiny = table.c_table[p1][p2]
-            tower = table.c_table[p1][0].piece_in_self
-            destiny_t = table.c_table[p1][p2 + 1]
-            if tower.moves == 0 and self.moves == 0:
-                table.movement_log.append(['0 - 0 - 0'])
-                destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
-                destiny_t.piece_in_self, table.c_table[p1][0].piece_in_self = tower, None
-                self.change_position(table, p1, p2)
-                tower.change_position(table, p1, p2 + 1)
-                self.moves+= 1
-                tower.moves+= 1
-                return True
-            print('Una de las piezas que hacen el enroque se ha movido')
+            if self.in_check == False:
+                p1, p2 = self.p1, self.p2 - 2
+                destiny = table.c_table[p1][p2]
+                tower = table.c_table[p1][0].piece_in_self
+                destiny_t = table.c_table[p1][p2 + 1]
+                if tower.moves == 0 and self.moves == 0:
+                    table.movement_log.append(['0 - 0 - 0'])
+                    destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
+                    destiny_t.piece_in_self, table.c_table[p1][0].piece_in_self = tower, None
+                    self.change_position(table, p1, p2)
+                    tower.change_position(table, p1, p2 + 1)
+                    self.moves+= 1
+                    tower.moves+= 1
+                    return True
+                print('Una de las piezas que hacen el enroque se ha movido')
+                return False
+            print('El rey está en jaque')
             return False
         print('El rey no puede hacer el enroque')
         return False
