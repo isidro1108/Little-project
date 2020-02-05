@@ -106,3 +106,15 @@ class Pawn(Piece):
             p1, p2 = self.p1, self.p2
             table.c_table[p1][p2].piece_in_self = crown_piece
             table.c_table[p1][p2].piece_in_self.set_control(table)
+
+    def revert_move(self, table):
+        last_p1, last_p2 = table.movement_log[-1][0][0], table.movement_log[-1][0][1]
+        destiny = table.c_table[last_p1][last_p2]
+        destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
+        self.change_position(table, last_p1, last_p2)
+        if self.moves == 1:
+            self.movements = [(self.dir, 0), (2 * self.dir, 0)]
+        else:
+            self.movements = [(self.dir, 0)]
+        table.movement_log.pop()
+        self.moves-= 1

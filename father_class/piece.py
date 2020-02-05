@@ -73,3 +73,9 @@ class Piece:
         for pos in self.controlled_boxes:
             table.c_table[pos[0]][pos[1]].controlled_by.remove((type(self), self.color))
         self.controlled_boxes = []
+
+    def revert_move(self, table):
+        last_p1, last_p2 = table.movement_log[-1][0][0], table.movement_log[-1][0][1]
+        self.move(table, last_p1, last_p2)
+        table.movement_log.pop()
+        self.moves-= 2

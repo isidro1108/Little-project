@@ -21,4 +21,3 @@ class Bishop(Mpiece):
                 return result
             p1, p2 = p1 + d[0], p2 + d[1]
         return result
-        
