@@ -118,3 +118,7 @@ class Pawn(Piece):
             self.movements = [(self.dir, 0)]
         table.movement_log.pop()
         self.moves-= 1
+
+    def revert_capture(self, table):
+        self.revert_move(table)
+        table.restore_piece()

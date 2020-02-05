@@ -11,11 +11,13 @@ player1.insert_pieces(chess_table)
 player2.insert_pieces(chess_table)
 
 player1.move(chess_table, 6, 4, 4, 4)
-player2.move(chess_table, 1, 4, 3, 4)
-player2.move(chess_table, 0, 3, 4, 7)
-player1.move(chess_table, 7, 6, 6, 4)
-player2.capture(chess_table, 4, 7, 4, 4)
-player1.move(chess_table, 6, 4, 5, 2)
+player2.move(chess_table, 1, 2, 3, 2)
+player1.move(chess_table, 6, 3, 5, 3)
+player2.move(chess_table, 3, 2, 4, 2)
+player2.move(chess_table, 0, 3, 3, 0)
+player2.move(chess_table, 3, 0, 3, 4)
+player2.move(chess_table, 1, 3, 3, 3)
+player1.capture(chess_table, 4, 4, 3, 3)
 
 index = 8
 for row in chess_table.c_table:

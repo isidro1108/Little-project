@@ -39,6 +39,11 @@ class Player:
         if self.is_my_piece(piece):
             move = piece.capture(table, pd1, pd2)
             table.update()
+            if self.pieces[8].in_check:
+                piece.revert_capture(table)
+                table.update()
+                print('El Rey corre peligro con este movimiento')
+                return False
             return move
         print('Esta no es tu pieza')
         return False

@@ -35,6 +35,14 @@ class Piece:
 
     def is_enemy_piece(self, piece):
         return isinstance(piece, Piece) and piece.color != self.color
+
+    def status(self):
+        print('Color: ' + self.color)
+        print('Position:', self.p1, self.p2)
+        print('Value:', self.value)
+        print('Moves:', self.moves)
+        print('Movements:', self.movements)
+        print('Controlled Boxes:', self.controlled_boxes)
     
     def move(self, table, p1, p2):
         if table.move_is_inside(p1, p2):
@@ -69,7 +77,6 @@ class Piece:
     
     def dead(self, table):
         table.repository.append(self)
-        self.movements = []
         for pos in self.controlled_boxes:
             table.c_table[pos[0]][pos[1]].controlled_by.remove((type(self), self.color))
         self.controlled_boxes = []
@@ -77,5 +84,12 @@ class Piece:
     def revert_move(self, table):
         last_p1, last_p2 = table.movement_log[-1][0][0], table.movement_log[-1][0][1]
         self.move(table, last_p1, last_p2)
+        table.movement_log.pop()
+        self.moves-= 2
+
+    def revert_capture(self, table):
+        last_p1, last_p2 = table.movement_log[-1][0][0], table.movement_log[-1][0][1]
+        self.move(table, last_p1, last_p2)
+        table.restore_piece()
         table.movement_log.pop()
         self.moves-= 2

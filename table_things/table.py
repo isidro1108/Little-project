@@ -43,3 +43,9 @@ class Table:
                     piece.quit_control(self)
                     piece.set_control(self)
         self.v_kings()
+
+    def restore_piece(self):
+        dead_piece = self.repository.pop()
+        self.c_table[dead_piece.p1][dead_piece.p2].piece_in_self = dead_piece
+        dead_piece.g_all_movements()
+        dead_piece.set_control(self)
