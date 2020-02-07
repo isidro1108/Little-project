@@ -23,51 +23,91 @@ class Player:
     def move(self, table, p1, p2, pd1, pd2):
         piece = table.c_table[p1][p2].piece_in_self
         if self.is_my_piece(piece):
-            piece.move(table, pd1, pd2)
+            move = piece.move(table, pd1, pd2)
             table.update()
-        else:
-            print('Esta no es tu pieza')
+            if self.pieces[8].in_check:
+                piece.revert_move(table)
+                table.update()
+                print('El Rey corre peligro con este movimiento')
+                return False
+            return move
+        print('Esta no es tu pieza')
+        return False
     
     def capture(self, table, p1, p2, pd1, pd2):
         piece = table.c_table[p1][p2].piece_in_self
         if self.is_my_piece(piece):
-            piece.capture(table, pd1, pd2)
+            move = piece.capture(table, pd1, pd2)
             table.update()
-        else:
-            print('Esta no es tu pieza')
+            if self.pieces[8].in_check:
+                piece.revert_capture(table)
+                table.update()
+                print('El Rey corre peligro con este movimiento')
+                return False
+            return move
+        print('Esta no es tu pieza')
+        return False
 
     def step_capture(self, table, p1, p2, pd1, pd2):
         piece = table.c_table[p1][p2].piece_in_self
         if isinstance(piece, Pawn):
             if self.is_my_piece(piece):
-                piece.step_capture(table, pd1, pd2)
+                move = piece.step_capture(table, pd1, pd2)
                 table.update()
-            else:
-                print('Esta no es tu pieza')
-        else:
-            print('Esta pieza no es un peón')
+                if self.pieces[8].in_check:
+                    piece.revert_capture(table)
+                    table.update()
+                    print('El Rey corre peligro con este movimiento')
+                    return False
+                return move
+            print('Esta no es tu pieza')
+            return False
+        print('Esta pieza no es un peón')
+        return False
     
-    def castling_to_left(self, table, p1, p2):
-        piece = table.c_table[p1][p2].piece_in_self
+    def castling_to_left(self, table):
+        p1 = table.pos_kings[self.pieces[0].color][0]
+        piece = table.c_table[p1][4].piece_in_self
         if isinstance(piece, King):
             if self.is_my_piece(piece):
-                piece.castling_to_left(table)
+                move = piece.castling_to_left(table)
                 table.update()
-            else:
-                print('Esta no es tu pieza')
-        else:
-            print('Esta pieza no es un rey')
+                return move
+            print('Esta no es tu pieza')
+            return False
+        print('Esta pieza no es un rey')
+        return False
     
-    def castling_to_right(self, table, p1, p2):
-        piece = table.c_table[p1][p2].piece_in_self
+    def castling_to_right(self, table):
+        p1 = table.pos_kings[self.pieces[0].color][0]
+        piece = table.c_table[p1][4].piece_in_self
         if isinstance(piece, King):
             if self.is_my_piece(piece):
-                piece.castling_to_right(table)
+                move = piece.castling_to_right(table)
                 table.update()
-            else:
-                print('Esta no es tu pieza')
-        else:
-            print('Esta pieza no es un rey')
+                return move
+            print('Esta no es tu pieza')
+            return False
+        print('Esta pieza no es un rey')
+        return False
+
+    def verify_checkmate(self, table):
+        available_movements = 0
+        # if self.pieces[8].in_check:
+        #     for piece in self.pieces:
+        #         for movement in piece.movements:
+        #             p1, p2 = piece.p1 + movement[0], piece.p2 + movement[1]
+        #             if self.move(table, piece.p1, piece.p2, p1, p2):
+        #                 if not self.pieces[8].in_check:
+        #                     available_movements+= 1
+        #                     piece.revert_move(table)
+        #             if self.capture(table, piece.p1, piece.p2, p1, p2):
+        #                 if not self.pieces[8].in_check:
+        #                     available_movements+= 1
+        #                     piece.revert_capture(table)
+        self.pieces[8].in_checkmate = available_movements == 0
+
+
 
 class Player1(Player):
     def __init__(self, name):

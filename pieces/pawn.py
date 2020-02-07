@@ -46,7 +46,7 @@ class Pawn(Piece):
             if self.move_in_movements(p1, p2) and destiny.is_available():
                 if self.__is_two_step(p1, p2) and not table.c_table[p1 - self.dir][p2].is_available():
                     print('El peon no puede pasar por encima de sus fichas')
-                    return
+                    return False
                 if self.__is_two_step(p1, p2):
                     self.p_step_capture = True
                 else:
@@ -57,8 +57,10 @@ class Pawn(Piece):
                 self.movements = [(self.dir, 0)]
                 self.moves+= 1
                 self.to_crown(table)
-            else:
-                print('El movimiento que ha insertado es invalido')
+                return True
+            print('El movimiento que ha insertado es invalido')
+            return False
+        return False
 
     def capture(self, table, p1, p2):
         if table.move_is_inside(p1, p2):
@@ -72,10 +74,12 @@ class Pawn(Piece):
                     self.change_position(table, p1, p2)
                     self.moves+= 1
                     self.to_crown(table)
-                else:
-                    print('Esta no es una pieza enemiga')
-            else:
-                print('Este no es un movimiento válido o no hay pieza para capturar')
+                    return True
+                print('Esta no es una pieza enemiga')
+                return False
+            print('Este no es un movimiento válido o no hay pieza para capturar')
+            return False
+        return False
         
     def step_capture(self, table, p1, p2):
         if table.move_is_inside(p1, p2):
@@ -89,10 +93,12 @@ class Pawn(Piece):
                     c_destiny.piece_in_self, destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = None, self, None
                     self.change_position(table, p1, p2)
                     self.moves+= 1
-                else:
-                    print('Esta no es una pieza enemiga o no se puede capturar al paso')
-            else:
-                print('Este no es un movimiento válido o no hay pieza para capturar')
+                    return True
+                print('Esta no es una pieza enemiga o no se puede capturar al paso')
+                return False
+            print('Este no es un movimiento válido o no hay pieza para capturar')
+            return False
+        return False
 
     def to_crown(self, table):
         if self.p1 == 0 or self.p1 == 7:
@@ -100,3 +106,19 @@ class Pawn(Piece):
             p1, p2 = self.p1, self.p2
             table.c_table[p1][p2].piece_in_self = crown_piece
             table.c_table[p1][p2].piece_in_self.set_control(table)
+
+    def revert_move(self, table):
+        last_p1, last_p2 = table.movement_log[-1][0][0], table.movement_log[-1][0][1]
+        destiny = table.c_table[last_p1][last_p2]
+        destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
+        self.change_position(table, last_p1, last_p2)
+        if self.moves == 1:
+            self.movements = [(self.dir, 0), (2 * self.dir, 0)]
+        else:
+            self.movements = [(self.dir, 0)]
+        table.movement_log.pop()
+        self.moves-= 1
+
+    def revert_capture(self, table):
+        self.revert_move(table)
+        table.restore_piece()
