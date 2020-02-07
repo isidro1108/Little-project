@@ -91,6 +91,24 @@ class Player:
         print('Esta pieza no es un rey')
         return False
 
+    def verify_checkmate(self, table):
+        available_movements = 0
+        # if self.pieces[8].in_check:
+        #     for piece in self.pieces:
+        #         for movement in piece.movements:
+        #             p1, p2 = piece.p1 + movement[0], piece.p2 + movement[1]
+        #             if self.move(table, piece.p1, piece.p2, p1, p2):
+        #                 if not self.pieces[8].in_check:
+        #                     available_movements+= 1
+        #                     piece.revert_move(table)
+        #             if self.capture(table, piece.p1, piece.p2, p1, p2):
+        #                 if not self.pieces[8].in_check:
+        #                     available_movements+= 1
+        #                     piece.revert_capture(table)
+        self.pieces[8].in_checkmate = available_movements == 0
+
+
+
 class Player1(Player):
     def __init__(self, name):
         Player.__init__(self, name)

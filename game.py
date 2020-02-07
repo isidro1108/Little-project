@@ -98,11 +98,19 @@ while True:
     if turn % 2 != 0:
         system('cls')
         player = player1
+        if player.pieces[8].in_check:
+            player.verify_checkmate(chess_table)
+            if player.pieces[8].in_checkmate:
+                break
         print('Turno de las blancas')
         print()
     else:
         system('cls')
         player = player2
+        if player.pieces[8].in_check:
+            player.verify_checkmate(chess_table)
+            if player.pieces[8].in_checkmate:
+                break
         print('Turno de las negras')
         print()
 
@@ -128,4 +136,13 @@ while True:
             turn+= 1
     else:
         print('Elija la opcion correctamente')
+
+if player == player1:
+    print_chess_table()
+    print()
+    print('**************************Jaque mate, ganaron las negras**************************')
+else:
+    print_chess_table()
+    print()
+    print('**************************Jaque mate, ganaron las blancas**************************')
     
