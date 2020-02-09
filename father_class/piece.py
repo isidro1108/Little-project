@@ -83,13 +83,15 @@ class Piece:
 
     def revert_move(self, table):
         last_p1, last_p2 = table.movement_log[-1][0][0], table.movement_log[-1][0][1]
-        self.move(table, last_p1, last_p2)
+        table.c_table[last_p1][last_p2].piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
+        self.change_position(table, last_p1, last_p2)
         table.movement_log.pop()
-        self.moves-= 2
+        self.moves-= 1
 
     def revert_capture(self, table):
         last_p1, last_p2 = table.movement_log[-1][0][0], table.movement_log[-1][0][1]
-        self.move(table, last_p1, last_p2)
+        table.c_table[last_p1][last_p2].piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
+        self.change_position(table, last_p1, last_p2)
         table.restore_piece()
         table.movement_log.pop()
-        self.moves-= 2
+        self.moves-= 1

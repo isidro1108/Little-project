@@ -105,19 +105,21 @@ while True:
     if turn % 2 != 0:
         system('cls')
         player = player1
-        # if player.pieces[8].in_check:
-        #     player.verify_checkmate(chess_table)
-        #     if player.pieces[8].in_checkmate:
-        #         break
+        if player.pieces[8].in_check:
+            player.verify_checkmate(chess_table)
+            if player.pieces[8].in_checkmate:
+                break
+            chess_table.alert = 'White king is in check'
         print("White's turn")
         print()
     else:
         system('cls')
         player = player2
-        # if player.pieces[8].in_check:
-        #     player.verify_checkmate(chess_table)
-        #     if player.pieces[8].in_checkmate:
-        #         break
+        if player.pieces[8].in_check:
+            player.verify_checkmate(chess_table)
+            if player.pieces[8].in_checkmate:
+                break
+            chess_table.alert = 'Black king is in check'
         print("Black's turn")
         print()
 

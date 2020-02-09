@@ -25,7 +25,7 @@ class Player:
         if self.is_my_piece(piece):
             move = piece.move(table, pd1, pd2)
             table.update()
-            if self.pieces[8].in_check:
+            if self.pieces[8].in_check and move:
                 piece.revert_move(table)
                 table.update()
                 table.alert = 'The king is in check with this movement'
@@ -39,7 +39,7 @@ class Player:
         if self.is_my_piece(piece):
             move = piece.capture(table, pd1, pd2)
             table.update()
-            if self.pieces[8].in_check:
+            if self.pieces[8].in_check and move:
                 piece.revert_capture(table)
                 table.update()
                 table.alert = 'The king is in check with this movement'
@@ -54,7 +54,7 @@ class Player:
             if self.is_my_piece(piece):
                 move = piece.step_capture(table, pd1, pd2)
                 table.update()
-                if self.pieces[8].in_check:
+                if self.pieces[8].in_check and move:
                     piece.revert_capture(table)
                     table.update()
                     table.alert = 'The king is in check with this movement'
@@ -93,18 +93,19 @@ class Player:
 
     def verify_checkmate(self, table):
         available_movements = 0
-        # if self.pieces[8].in_check:
-        #     for piece in self.pieces:
-        #         for movement in piece.movements:
-        #             p1, p2 = piece.p1 + movement[0], piece.p2 + movement[1]
-        #             if self.move(table, piece.p1, piece.p2, p1, p2):
-        #                 if not self.pieces[8].in_check:
-        #                     available_movements+= 1
-        #                     piece.revert_move(table)
-        #             if self.capture(table, piece.p1, piece.p2, p1, p2):
-        #                 if not self.pieces[8].in_check:
-        #                     available_movements+= 1
-        #                     piece.revert_capture(table)
+        if self.pieces[8].in_check:
+            for piece in self.pieces:
+                for movement in piece.movements:
+                    p1, p2 = piece.p1 + movement[0], piece.p2 + movement[1]
+                    if table.move_is_inside(p1, p2):
+                        if self.move(table, piece.p1, piece.p2, p1, p2):
+                            if not self.pieces[8].in_check:
+                                available_movements+= 1
+                                piece.revert_move(table)
+                        if self.capture(table, piece.p1, piece.p2, p1, p2):
+                            if not self.pieces[8].in_check:
+                                available_movements+= 1
+                                piece.revert_capture(table)
         self.pieces[8].in_checkmate = available_movements == 0
 
 
