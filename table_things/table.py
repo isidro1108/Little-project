@@ -6,6 +6,7 @@ class Table:
         self.movement_log = []
         self.repository = []
         self.pos_kings = {'white': (7, 4), 'black': (0, 4)}
+        self.alert = ''
     
     def create(self, turn_row = 1):
         p1 = turn_row - 1

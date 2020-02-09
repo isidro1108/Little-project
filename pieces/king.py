@@ -45,11 +45,11 @@ class King(Piece):
                     self.moves+= 1
                     tower.moves+= 1
                     return True
-                print('Una de las piezas que hacen el enroque se ha movido')
+                table.alert = 'One of the pieces that make the castling has moved'
                 return False
-            print('El Rey está en jaque')
+            table.alert = 'The king is in check'
             return False
-        print('El rey no puede hacer el enroque')
+        table.alert = 'The king cannot do the castling'
         return False
 
     def castling_to_left(self, table):
@@ -68,11 +68,11 @@ class King(Piece):
                     self.moves+= 1
                     tower.moves+= 1
                     return True
-                print('Una de las piezas que hacen el enroque se ha movido')
+                table.alert = 'One of the pieces that make the castling has moved'
                 return False
-            print('El rey está en jaque')
+            table.alert = 'The king is in check'
             return False
-        print('El rey no puede hacer el enroque')
+        table.alert = 'The king cannot do the castling'
         return False
 
     def change_position(self, table, p1, p2):
@@ -91,9 +91,9 @@ class King(Piece):
                     self.change_position(table, p1, p2)
                     self.moves+= 1
                     return True
-                print('La casilla está controlada por una pieza enemiga')
+                table.alert = 'The box is controlled by an enemy piece'
                 return False
-            print('El movimiento que ha insertado es invalido')
+            table.alert = 'Invalid movement'
             return False
         return False
 
@@ -110,10 +110,10 @@ class King(Piece):
                         self.change_position(table, p1, p2)
                         self.moves+= 1
                         return True
-                    print('La pieza está protegida')
+                    table.alert = 'The piece is protected'
                     return False
-                print('Esta no es una pieza enemiga')
+                table.alert = 'This is not a enemy piece'
                 return False
-            print('Este no es un movimiento válido o no hay pieza para capturar')
+            table.alert = 'Invalid movement or there is no piece to capture'
             return False
         return False

@@ -28,10 +28,10 @@ class Player:
             if self.pieces[8].in_check:
                 piece.revert_move(table)
                 table.update()
-                print('El Rey corre peligro con este movimiento')
+                table.alert = 'The king is in check with this movement'
                 return False
             return move
-        print('Esta no es tu pieza')
+        table.alert = "It isn't your piece"
         return False
     
     def capture(self, table, p1, p2, pd1, pd2):
@@ -42,10 +42,10 @@ class Player:
             if self.pieces[8].in_check:
                 piece.revert_capture(table)
                 table.update()
-                print('El Rey corre peligro con este movimiento')
+                table.alert = 'The king is in check with this movement'
                 return False
             return move
-        print('Esta no es tu pieza')
+        table.alert = "It isn't your piece"
         return False
 
     def step_capture(self, table, p1, p2, pd1, pd2):
@@ -57,12 +57,12 @@ class Player:
                 if self.pieces[8].in_check:
                     piece.revert_capture(table)
                     table.update()
-                    print('El Rey corre peligro con este movimiento')
+                    table.alert = 'The king is in check with this movement'
                     return False
                 return move
-            print('Esta no es tu pieza')
+            table.alert = "It isn't your piece"
             return False
-        print('Esta pieza no es un peón')
+        table.alert = 'This piece is not a pawn'
         return False
     
     def castling_to_left(self, table):
@@ -73,9 +73,9 @@ class Player:
                 move = piece.castling_to_left(table)
                 table.update()
                 return move
-            print('Esta no es tu pieza')
+            table.alert = "It isn't your piece"
             return False
-        print('Esta pieza no es un rey')
+        table.alert = 'This piece is not a king'
         return False
     
     def castling_to_right(self, table):
@@ -86,9 +86,9 @@ class Player:
                 move = piece.castling_to_right(table)
                 table.update()
                 return move
-            print('Esta no es tu pieza')
+            table.alert = "It isn't your piece"
             return False
-        print('Esta pieza no es un rey')
+        table.alert = 'This piece is not a king'
         return False
 
     def verify_checkmate(self, table):
