@@ -169,4 +169,3 @@ else:
     print_chess_table(chess_table, False)
     print()
     print('**************************Check mate, White wins**************************')
-    
