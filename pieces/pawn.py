@@ -53,6 +53,8 @@ class Pawn(Piece):
                     table.pos_p_step_capture.append((p1, p2))
                 else:
                     self.p_step_capture = False
+                    if (self.p1, self.p2) in table.pos_p_step_capture:
+                        table.pos_p_step_capture.remove((self.p1, self.p2))
                 table.movement_log.append([(self.p1, self.p2), (p1, p2)])
                 if not self.p_step_capture:
                     table.verify_step_capture()
