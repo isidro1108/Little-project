@@ -25,6 +25,9 @@ def move(player):
     if valid_position(p) and valid_position(pd):
         p1, p2 = 8 - int(p[1]), col[p[0]]
         pd1, pd2 = 8 - int(pd[1]), col[pd[0]]
+        if chess_table.c_table[p1][p2].piece_in_self == None:
+            chess_table.alert = 'This box is empty'
+            return False
         move = player.move(chess_table, p1, p2, pd1, pd2)
         return move
     chess_table.alert = 'Invalid input'
@@ -36,6 +39,9 @@ def capture(player):
     if valid_position(p) and valid_position(pd):
         p1, p2 = 8 - int(p[1]), col[p[0]]
         pd1, pd2 = 8 - int(pd[1]), col[pd[0]]
+        if chess_table.c_table[p1][p2].piece_in_self == None:
+            chess_table.alert = 'This box is empty'
+            return False
         move = player.capture(chess_table, p1, p2, pd1, pd2)
         return move
     chess_table.alert = 'Invalid input'
@@ -47,6 +53,9 @@ def step_capture(player):
     if valid_position(p) and valid_position(pd):
         p1, p2 = 8 - int(p[1]), col[p[0]]
         pd1, pd2 = 8 - int(pd[1]), col[pd[0]]
+        if chess_table.c_table[p1][p2].piece_in_self == None:
+            chess_table.alert = 'This box is empty'
+            return False
         move = player.step_capture(chess_table, p1, p2, pd1, pd2)
         return move
     chess_table.alert = 'Invalid input'

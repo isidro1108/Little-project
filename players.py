@@ -22,6 +22,9 @@ class Player:
 
     def move(self, table, p1, p2, pd1, pd2):
         piece = table.c_table[p1][p2].piece_in_self
+        if piece != None:
+            if piece not in self.pieces and piece.color == self.pieces[-1].color:
+                self.pieces.append(piece)
         if self.is_my_piece(piece):
             move = piece.move(table, pd1, pd2)
             table.update()
@@ -36,6 +39,9 @@ class Player:
     
     def capture(self, table, p1, p2, pd1, pd2):
         piece = table.c_table[p1][p2].piece_in_self
+        if piece != None:
+            if piece not in self.pieces and piece.color == self.pieces[-1].color:
+                self.pieces.append(piece)
         if self.is_my_piece(piece):
             move = piece.capture(table, pd1, pd2)
             table.update()

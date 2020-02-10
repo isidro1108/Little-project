@@ -3,6 +3,7 @@ from pieces.queen import Queen
 from pieces.bishop import Bishop
 from pieces.knight import Knight
 from pieces.tower import Tower
+from os import system
 
 class Pawn(Piece):
     address = {'white': -1, 'black': 1}
@@ -102,9 +103,25 @@ class Pawn(Piece):
 
     def to_crown(self, table):
         if self.p1 == 0 or self.p1 == 7:
-            crown_piece = Queen(self.color, self.p1, self.p2)
+            system('cls')
+            print()
+            print('What piece do you want?')
+            print()
+            print('1.Queen  2.Tower  3.Bishop  4.Knight')
+            op = input('Choose an option: ')
+            if op == '1':
+                crown_piece = Queen(self.color, self.p1, self.p2)
+            elif op == '2':
+                crown_piece = Tower(self.color, self.p1, self.p2)
+            elif op == '3':
+                crown_piece = Bishop(self.color, self.p1, self.p2)
+            elif op == '4':
+                crown_piece = Knight(self.color, self.p1, self.p2)
+            else:
+                crown_piece = Queen(self.color, self.p1, self.p2)
             p1, p2 = self.p1, self.p2
             table.c_table[p1][p2].piece_in_self = crown_piece
+            table.c_table[p1][p2].piece_in_self.g_all_movements()
             table.c_table[p1][p2].piece_in_self.set_control(table)
 
     def revert_move(self, table):
