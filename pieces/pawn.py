@@ -50,9 +50,14 @@ class Pawn(Piece):
                     return False
                 if self.__is_two_step(p1, p2):
                     self.p_step_capture = True
+                    table.pos_p_step_capture.append((p1, p2))
                 else:
                     self.p_step_capture = False
+                    if (self.p1, self.p2) in table.pos_p_step_capture:
+                        table.pos_p_step_capture.remove((self.p1, self.p2))
                 table.movement_log.append([(self.p1, self.p2), (p1, p2)])
+                if not self.p_step_capture:
+                    table.verify_step_capture()
                 destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
                 self.change_position(table, p1, p2)
                 self.movements = [(self.dir, 0)]
@@ -70,6 +75,7 @@ class Pawn(Piece):
                 f_piece = table.c_table[p1][p2].piece_in_self
                 if self.is_enemy_piece(f_piece):
                     table.movement_log.append([(self.p1, self.p2), (p1, p2)])
+                    table.verify_step_capture()
                     f_piece.dead(table)
                     destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
                     self.change_position(table, p1, p2)
@@ -104,10 +110,8 @@ class Pawn(Piece):
     def to_crown(self, table):
         if self.p1 == 0 or self.p1 == 7:
             system('cls')
-            print()
-            print('What piece do you want?')
-            print()
-            print('1.Queen  2.Tower  3.Bishop  4.Knight')
+            print('\nWhat piece do you want?')
+            print('\n1.Queen  2.Tower  3.Bishop  4.Knight')
             op = input('Choose an option: ')
             if op == '1':
                 crown_piece = Queen(self.color, self.p1, self.p2)

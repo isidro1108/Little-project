@@ -87,6 +87,7 @@ class King(Piece):
             if self.move_in_movements(p1, p2) and destiny.is_available():
                 if not destiny.is_controlled(self):
                     table.movement_log.append([(self.p1, self.p2), (p1, p2)])
+                    table.verify_step_capture()
                     destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
                     self.change_position(table, p1, p2)
                     self.moves+= 1
@@ -105,6 +106,7 @@ class King(Piece):
                 if self.is_enemy_piece(f_piece):
                     if not destiny.is_controlled(self):
                         table.movement_log.append([(self.p1, self.p2), (p1, p2)])
+                        table.verify_step_capture()
                         f_piece.dead(table)
                         destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
                         self.change_position(table, p1, p2)
@@ -117,18 +119,3 @@ class King(Piece):
             table.alert = 'Invalid movement or there is no piece to capture'
             return False
         return False
-
-    def revert_move(self, table):
-        last_p1, last_p2 = table.movement_log[-1][0][0], table.movement_log[-1][0][1]
-        table.c_table[last_p1][last_p2].piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
-        self.change_position(table, last_p1, last_p2)
-        table.movement_log.pop()
-        self.moves-= 1
-
-    def revert_capture(self, table):
-        last_p1, last_p2 = table.movement_log[-1][0][0], table.movement_log[-1][0][1]
-        table.c_table[last_p1][last_p2].piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
-        self.change_position(table, last_p1, last_p2)
-        table.restore_piece()
-        table.movement_log.pop()
-        self.moves-= 1

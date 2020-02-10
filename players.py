@@ -98,7 +98,6 @@ class Player:
         return False
 
     def verify_checkmate(self, table):
-        available_movements = 0
         if self.pieces[8].in_check:
             for piece in self.pieces:
                 for movement in piece.movements:
@@ -106,13 +105,13 @@ class Player:
                     if table.move_is_inside(p1, p2):
                         if self.move(table, piece.p1, piece.p2, p1, p2):
                             if not self.pieces[8].in_check:
-                                available_movements+= 1
                                 piece.revert_move(table)
+                                return
                         if self.capture(table, piece.p1, piece.p2, p1, p2):
                             if not self.pieces[8].in_check:
-                                available_movements+= 1
                                 piece.revert_capture(table)
-        self.pieces[8].in_checkmate = available_movements == 0
+                                return
+        self.pieces[8].in_checkmate = True
 
 
 
