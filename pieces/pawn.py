@@ -104,10 +104,8 @@ class Pawn(Piece):
     def to_crown(self, table):
         if self.p1 == 0 or self.p1 == 7:
             system('cls')
-            print()
-            print('What piece do you want?')
-            print()
-            print('1.Queen  2.Tower  3.Bishop  4.Knight')
+            print('\nWhat piece do you want?')
+            print('\n1.Queen  2.Tower  3.Bishop  4.Knight')
             op = input('Choose an option: ')
             if op == '1':
                 crown_piece = Queen(self.color, self.p1, self.p2)

@@ -5,11 +5,8 @@ chess_table = Table()
 chess_table.create()
 
 system('cls')
-print()
-print('**************************Chess Game**************************')
-print()
-print('Players')
-print()
+print('\n**************************Chess Game**************************\n')
+print('Players\n')
 player1 = Player1(input('Insert the name of the white player: '))
 player2 = Player2(input('Insert the name of the black player: '))
 
@@ -125,8 +122,7 @@ while True:
             if player.pieces[8].in_checkmate:
                 break
             chess_table.alert = 'White king is in check'
-        print("White's turn ({})".format(player.name))
-        print()
+        print("White's turn ({})\n".format(player.name))
     else:
         system('cls')
         player = player2
@@ -135,12 +131,10 @@ while True:
             if player.pieces[8].in_checkmate:
                 break
             chess_table.alert = 'Black king is in check'
-        print("Black's turn ({})".format(player.name))
-        print()
+        print("Black's turn ({})\n".format(player.name))
 
     print_chess_table(chess_table)
-    print()
-    print('1. Move  2. Capture  3. Step capture  4. Castling to left  5. Castling to right')
+    print('\n1. Move  2. Capture  3. Step capture  4. Castling to left  5. Castling to right')
     op = input('Choose an option: ')
     print(op)
     if op == '1':
@@ -163,9 +157,7 @@ while True:
 
 if player == player1:
     print_chess_table(chess_table, False)
-    print()
-    print('**************************Check mate, Black wins**************************')
+    print('\n**************************Check mate, Black wins**************************')
 else:
     print_chess_table(chess_table, False)
-    print()
-    print('**************************Check mate, White wins**************************')
+    print('\n**************************Check mate, White wins**************************')
