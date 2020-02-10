@@ -22,30 +22,36 @@ class Player:
 
     def move(self, table, p1, p2, pd1, pd2):
         piece = table.c_table[p1][p2].piece_in_self
+        if piece != None:
+            if piece not in self.pieces and piece.color == self.pieces[-1].color:
+                self.pieces.append(piece)
         if self.is_my_piece(piece):
             move = piece.move(table, pd1, pd2)
             table.update()
-            if self.pieces[8].in_check:
+            if self.pieces[8].in_check and move:
                 piece.revert_move(table)
                 table.update()
-                print('El Rey corre peligro con este movimiento')
+                table.alert = 'The king is in check with this movement'
                 return False
             return move
-        print('Esta no es tu pieza')
+        table.alert = "It isn't your piece"
         return False
     
     def capture(self, table, p1, p2, pd1, pd2):
         piece = table.c_table[p1][p2].piece_in_self
+        if piece != None:
+            if piece not in self.pieces and piece.color == self.pieces[-1].color:
+                self.pieces.append(piece)
         if self.is_my_piece(piece):
             move = piece.capture(table, pd1, pd2)
             table.update()
-            if self.pieces[8].in_check:
+            if self.pieces[8].in_check and move:
                 piece.revert_capture(table)
                 table.update()
-                print('El Rey corre peligro con este movimiento')
+                table.alert = 'The king is in check with this movement'
                 return False
             return move
-        print('Esta no es tu pieza')
+        table.alert = "It isn't your piece"
         return False
 
     def step_capture(self, table, p1, p2, pd1, pd2):
@@ -54,15 +60,15 @@ class Player:
             if self.is_my_piece(piece):
                 move = piece.step_capture(table, pd1, pd2)
                 table.update()
-                if self.pieces[8].in_check:
+                if self.pieces[8].in_check and move:
                     piece.revert_capture(table)
                     table.update()
-                    print('El Rey corre peligro con este movimiento')
+                    table.alert = 'The king is in check with this movement'
                     return False
                 return move
-            print('Esta no es tu pieza')
+            table.alert = "It isn't your piece"
             return False
-        print('Esta pieza no es un peón')
+        table.alert = 'This piece is not a pawn'
         return False
     
     def castling_to_left(self, table):
@@ -73,9 +79,9 @@ class Player:
                 move = piece.castling_to_left(table)
                 table.update()
                 return move
-            print('Esta no es tu pieza')
+            table.alert = "It isn't your piece"
             return False
-        print('Esta pieza no es un rey')
+        table.alert = 'This piece is not a king'
         return False
     
     def castling_to_right(self, table):
@@ -86,25 +92,26 @@ class Player:
                 move = piece.castling_to_right(table)
                 table.update()
                 return move
-            print('Esta no es tu pieza')
+            table.alert = "It isn't your piece"
             return False
-        print('Esta pieza no es un rey')
+        table.alert = 'This piece is not a king'
         return False
 
     def verify_checkmate(self, table):
         available_movements = 0
-        # if self.pieces[8].in_check:
-        #     for piece in self.pieces:
-        #         for movement in piece.movements:
-        #             p1, p2 = piece.p1 + movement[0], piece.p2 + movement[1]
-        #             if self.move(table, piece.p1, piece.p2, p1, p2):
-        #                 if not self.pieces[8].in_check:
-        #                     available_movements+= 1
-        #                     piece.revert_move(table)
-        #             if self.capture(table, piece.p1, piece.p2, p1, p2):
-        #                 if not self.pieces[8].in_check:
-        #                     available_movements+= 1
-        #                     piece.revert_capture(table)
+        if self.pieces[8].in_check:
+            for piece in self.pieces:
+                for movement in piece.movements:
+                    p1, p2 = piece.p1 + movement[0], piece.p2 + movement[1]
+                    if table.move_is_inside(p1, p2):
+                        if self.move(table, piece.p1, piece.p2, p1, p2):
+                            if not self.pieces[8].in_check:
+                                available_movements+= 1
+                                piece.revert_move(table)
+                        if self.capture(table, piece.p1, piece.p2, p1, p2):
+                            if not self.pieces[8].in_check:
+                                available_movements+= 1
+                                piece.revert_capture(table)
         self.pieces[8].in_checkmate = available_movements == 0
 
 

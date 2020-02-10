@@ -20,33 +20,45 @@ def valid_position(p):
     return p in positions
 
 def move(player):
-    p = input('Inserte la posicion de la pieza que desea mover: ')
-    pd = input('Donde desea moverse: ')
+    p = input('Insert the position of the piece you want to move: ')
+    pd = input('Where do you want to move: ')
     if valid_position(p) and valid_position(pd):
         p1, p2 = 8 - int(p[1]), col[p[0]]
         pd1, pd2 = 8 - int(pd[1]), col[pd[0]]
+        if chess_table.c_table[p1][p2].piece_in_self == None:
+            chess_table.alert = 'This box is empty'
+            return False
         move = player.move(chess_table, p1, p2, pd1, pd2)
         return move
+    chess_table.alert = 'Invalid input'
     return False
 
 def capture(player):
-    p = input('Inserte la posicion de la pieza con la que desea capturar: ')
-    pd = input('Donde desea capturar: ')
+    p = input('Insert the position of the piece with which you want to capture: ')
+    pd = input('Where do you want to capture: ')
     if valid_position(p) and valid_position(pd):
         p1, p2 = 8 - int(p[1]), col[p[0]]
         pd1, pd2 = 8 - int(pd[1]), col[pd[0]]
+        if chess_table.c_table[p1][p2].piece_in_self == None:
+            chess_table.alert = 'This box is empty'
+            return False
         move = player.capture(chess_table, p1, p2, pd1, pd2)
         return move
+    chess_table.alert = 'Invalid input'
     return False
 
 def step_capture(player):
-    p = input('Inserte la posicion de la pieza con la que desea capturar: ')
-    pd = input('Donde desea capturar: ')
+    p = input('Insert the position of the piece with which you want to capture: ')
+    pd = input('Where do you want to capture: ')
     if valid_position(p) and valid_position(pd):
         p1, p2 = 8 - int(p[1]), col[p[0]]
         pd1, pd2 = 8 - int(pd[1]), col[pd[0]]
+        if chess_table.c_table[p1][p2].piece_in_self == None:
+            chess_table.alert = 'This box is empty'
+            return False
         move = player.step_capture(chess_table, p1, p2, pd1, pd2)
         return move
+    chess_table.alert = 'Invalid input'
     return False
 
 def castling_to_left(player):
@@ -57,9 +69,9 @@ def castling_to_right(player):
     move = player.castling_to_right(chess_table)
     return move
 
-def print_chess_table():
+def print_chess_table(table, show_alert= True):
     index = 8
-    for row in chess_table.c_table:
+    for row in table.c_table:
         pieces = ''
         for box in row:
             piece = box.piece_in_self
@@ -89,7 +101,11 @@ def print_chess_table():
                 pieces+= '[♔ ]'
             elif isinstance(piece, Pawn) and piece.color == 'black':
                 pieces+= '[♙ ]'
-        print(index, pieces)
+        if index == 5 and show_alert:
+            print(index, pieces, table.alert)
+            table.alert = ''
+        else:
+            print(index, pieces)
         index-= 1
     print('   a   b   c   d   e   f   g   h')
     
@@ -102,7 +118,8 @@ while True:
             player.verify_checkmate(chess_table)
             if player.pieces[8].in_checkmate:
                 break
-        print('Turno de las blancas')
+            chess_table.alert = 'White king is in check'
+        print("White's turn")
         print()
     else:
         system('cls')
@@ -111,13 +128,14 @@ while True:
             player.verify_checkmate(chess_table)
             if player.pieces[8].in_checkmate:
                 break
-        print('Turno de las negras')
+            chess_table.alert = 'Black king is in check'
+        print("Black's turn")
         print()
 
-    print_chess_table()
+    print_chess_table(chess_table)
     print()
-    print('1. Mover  2. Capturar  3. Capturar al paso  4. Enroque a la izquierda  5. Enroque a la derecha')
-    op = input('Elige una opcion: ')
+    print('1. Move  2. Capture  3. Step capture  4. Castling to left  5. Castling to right')
+    op = input('Choose an option: ')
     print(op)
     if op == '1':
         if move(player):
@@ -135,14 +153,14 @@ while True:
         if castling_to_right(player):
             turn+= 1
     else:
-        print('Elija la opcion correctamente')
+        chess_table.alert = 'Incorrect option'
 
 if player == player1:
-    print_chess_table()
+    print_chess_table(chess_table, False)
     print()
-    print('**************************Jaque mate, ganaron las negras**************************')
+    print('**************************Check mate, Black wins**************************')
 else:
-    print_chess_table()
+    print_chess_table(chess_table, False)
     print()
-    print('**************************Jaque mate, ganaron las blancas**************************')
+    print('**************************Check mate, White wins**************************')
     

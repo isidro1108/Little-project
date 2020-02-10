@@ -53,7 +53,7 @@ class Piece:
                 self.change_position(table, p1, p2)
                 self.moves+= 1
                 return True
-            print('El movimiento que ha insertado es invalido')
+            table.alert = 'Invalid movement'
             return False
         return False
 
@@ -69,9 +69,9 @@ class Piece:
                     self.change_position(table, p1, p2)
                     self.moves+= 1
                     return True
-                print('Esta no es una pieza enemiga')
+                table.alert = 'This is not a enemy piece'
                 return False
-            print('Este no es un movimiento válido o no hay pieza para capturar')
+            table.alert = 'Invalid movement or there is no piece to capture'
             return False
         return False
     
@@ -83,13 +83,15 @@ class Piece:
 
     def revert_move(self, table):
         last_p1, last_p2 = table.movement_log[-1][0][0], table.movement_log[-1][0][1]
-        self.move(table, last_p1, last_p2)
+        table.c_table[last_p1][last_p2].piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
+        self.change_position(table, last_p1, last_p2)
         table.movement_log.pop()
-        self.moves-= 2
+        self.moves-= 1
 
     def revert_capture(self, table):
         last_p1, last_p2 = table.movement_log[-1][0][0], table.movement_log[-1][0][1]
-        self.move(table, last_p1, last_p2)
+        table.c_table[last_p1][last_p2].piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
+        self.change_position(table, last_p1, last_p2)
         table.restore_piece()
         table.movement_log.pop()
-        self.moves-= 2
+        self.moves-= 1

@@ -3,6 +3,7 @@ from pieces.queen import Queen
 from pieces.bishop import Bishop
 from pieces.knight import Knight
 from pieces.tower import Tower
+from os import system
 
 class Pawn(Piece):
     address = {'white': -1, 'black': 1}
@@ -45,7 +46,7 @@ class Pawn(Piece):
             destiny = table.c_table[p1][p2]
             if self.move_in_movements(p1, p2) and destiny.is_available():
                 if self.__is_two_step(p1, p2) and not table.c_table[p1 - self.dir][p2].is_available():
-                    print('El peon no puede pasar por encima de sus fichas')
+                    table.alert = 'The pawn cannot jump over another piece'
                     return False
                 if self.__is_two_step(p1, p2):
                     self.p_step_capture = True
@@ -58,7 +59,7 @@ class Pawn(Piece):
                 self.moves+= 1
                 self.to_crown(table)
                 return True
-            print('El movimiento que ha insertado es invalido')
+            table.alert = 'Invalid movement'
             return False
         return False
 
@@ -75,9 +76,9 @@ class Pawn(Piece):
                     self.moves+= 1
                     self.to_crown(table)
                     return True
-                print('Esta no es una pieza enemiga')
+                table.alert = 'This is not a enemy piece'
                 return False
-            print('Este no es un movimiento válido o no hay pieza para capturar')
+            table.alert = 'Invalid movement or there is no piece to capture'
             return False
         return False
         
@@ -94,17 +95,33 @@ class Pawn(Piece):
                     self.change_position(table, p1, p2)
                     self.moves+= 1
                     return True
-                print('Esta no es una pieza enemiga o no se puede capturar al paso')
+                table.alert = 'This is not a enemy piece or cannot be captured at step'
                 return False
-            print('Este no es un movimiento válido o no hay pieza para capturar')
+            table.alert = 'Invalid movement or there is no piece to capture'
             return False
         return False
 
     def to_crown(self, table):
         if self.p1 == 0 or self.p1 == 7:
-            crown_piece = Queen(self.color, self.p1, self.p2)
+            system('cls')
+            print()
+            print('What piece do you want?')
+            print()
+            print('1.Queen  2.Tower  3.Bishop  4.Knight')
+            op = input('Choose an option: ')
+            if op == '1':
+                crown_piece = Queen(self.color, self.p1, self.p2)
+            elif op == '2':
+                crown_piece = Tower(self.color, self.p1, self.p2)
+            elif op == '3':
+                crown_piece = Bishop(self.color, self.p1, self.p2)
+            elif op == '4':
+                crown_piece = Knight(self.color, self.p1, self.p2)
+            else:
+                crown_piece = Queen(self.color, self.p1, self.p2)
             p1, p2 = self.p1, self.p2
             table.c_table[p1][p2].piece_in_self = crown_piece
+            table.c_table[p1][p2].piece_in_self.g_all_movements()
             table.c_table[p1][p2].piece_in_self.set_control(table)
 
     def revert_move(self, table):
