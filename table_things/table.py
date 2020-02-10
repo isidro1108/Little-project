@@ -6,6 +6,7 @@ class Table:
         self.movement_log = []
         self.repository = []
         self.pos_kings = {'white': (7, 4), 'black': (0, 4)}
+        self.pos_p_step_capture = []
         self.alert = ''
     
     def create(self, turn_row = 1):
@@ -44,6 +45,13 @@ class Table:
                     piece.quit_control(self)
                     piece.set_control(self)
         self.v_kings()
+
+    def verify_step_capture(self):
+        if self.pos_p_step_capture:
+            scp1, scp2 = self.pos_p_step_capture[-1][0], self.pos_p_step_capture[-1][1]
+            pawn = self.c_table[scp1][scp2].piece_in_self
+            if pawn.p_step_capture:
+                pawn.p_step_capture = False
 
     def restore_piece(self):
         dead_piece = self.repository.pop()

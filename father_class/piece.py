@@ -49,6 +49,7 @@ class Piece:
             destiny = table.c_table[p1][p2]
             if self.move_in_movements(p1, p2) and destiny.is_available():
                 table.movement_log.append([(self.p1, self.p2), (p1, p2)])
+                table.verify_step_capture()
                 destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
                 self.change_position(table, p1, p2)
                 self.moves+= 1
@@ -64,6 +65,7 @@ class Piece:
                 f_piece = table.c_table[p1][p2].piece_in_self
                 if self.is_enemy_piece(f_piece):
                     table.movement_log.append([(self.p1, self.p2), (p1, p2)])
+                    table.verify_step_capture()
                     f_piece.dead(table)
                     destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
                     self.change_position(table, p1, p2)

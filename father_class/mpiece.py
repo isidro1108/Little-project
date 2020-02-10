@@ -50,6 +50,7 @@ class Mpiece(Piece):
                 v_boxes = self.v_boxes(table, self.p1, self.p2, p1, p2)
                 if (p1, p2) in v_boxes:
                     table.movement_log.append([(self.p1, self.p2), (p1, p2)])
+                    table.verify_step_capture()
                     destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
                     self.change_position(table, p1, p2)
                     self.moves+= 1
@@ -69,6 +70,7 @@ class Mpiece(Piece):
                     v_boxes = self.v_boxes(table, self.p1, self.p2, p1, p2)
                     if (p1, p2) in v_boxes:
                         table.movement_log.append([(self.p1, self.p2), (p1, p2)])
+                        table.verify_step_capture()
                         f_piece.dead(table)
                         destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
                         self.change_position(table, p1, p2)

@@ -50,9 +50,12 @@ class Pawn(Piece):
                     return False
                 if self.__is_two_step(p1, p2):
                     self.p_step_capture = True
+                    table.pos_p_step_capture.append((p1, p2))
                 else:
                     self.p_step_capture = False
                 table.movement_log.append([(self.p1, self.p2), (p1, p2)])
+                if not self.p_step_capture:
+                    table.verify_step_capture()
                 destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
                 self.change_position(table, p1, p2)
                 self.movements = [(self.dir, 0)]
@@ -70,6 +73,7 @@ class Pawn(Piece):
                 f_piece = table.c_table[p1][p2].piece_in_self
                 if self.is_enemy_piece(f_piece):
                     table.movement_log.append([(self.p1, self.p2), (p1, p2)])
+                    table.verify_step_capture()
                     f_piece.dead(table)
                     destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
                     self.change_position(table, p1, p2)
