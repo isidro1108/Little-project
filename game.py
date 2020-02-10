@@ -4,8 +4,14 @@ from os import system
 chess_table = Table()
 chess_table.create()
 
-player1 = Player1('Chester')
-player2 = Player2('Michael')
+system('cls')
+print()
+print('**************************Chess Game**************************')
+print()
+print('Players')
+print()
+player1 = Player1(input('Insert the name of the white player: '))
+player2 = Player2(input('Insert the name of the black player: '))
 
 player1.insert_pieces(chess_table)
 player2.insert_pieces(chess_table)
@@ -119,7 +125,7 @@ while True:
             if player.pieces[8].in_checkmate:
                 break
             chess_table.alert = 'White king is in check'
-        print("White's turn")
+        print("White's turn ({})".format(player.name))
         print()
     else:
         system('cls')
@@ -129,7 +135,7 @@ while True:
             if player.pieces[8].in_checkmate:
                 break
             chess_table.alert = 'Black king is in check'
-        print("Black's turn")
+        print("Black's turn ({})".format(player.name))
         print()
 
     print_chess_table(chess_table)
