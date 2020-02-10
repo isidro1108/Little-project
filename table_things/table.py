@@ -50,7 +50,7 @@ class Table:
         if self.pos_p_step_capture:
             scp1, scp2 = self.pos_p_step_capture[-1][0], self.pos_p_step_capture[-1][1]
             pawn = self.c_table[scp1][scp2].piece_in_self
-            if pawn.p_step_capture:
+            if pawn.p_step_capture and pawn != None:
                 pawn.p_step_capture = False
 
     def restore_piece(self):
