@@ -13,9 +13,9 @@ class Game:
 
         system('cls')
         print('\n**************************Chess Game**************************\n')
-        print('Players\n')
-        self.player1 = Player1(input('Insert the name of the white player: '))
-        self.player2 = Player2(input('Insert the name of the black player: '))
+        print('Players\n ')
+        self.player1 = Player1(input('Insert the name of the white player:'))
+        self.player2 = Player2(input('Insert the name of the black player:'))
 
         self.player1.insert_pieces(self.chess_table)
         self.player2.insert_pieces(self.chess_table)
