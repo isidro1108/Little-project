@@ -1,4 +1,5 @@
 from table_things.box import Box
+from pieces.pawn import Pawn
 
 class Table:
     def __init__(self):
@@ -50,7 +51,7 @@ class Table:
         if self.pos_p_step_capture:
             scp1, scp2 = self.pos_p_step_capture[-1][0], self.pos_p_step_capture[-1][1]
             pawn = self.c_table[scp1][scp2].piece_in_self
-            if pawn != None:
+            if isinstance(pawn, Pawn):
                 if pawn.p_step_capture:
                     pawn.p_step_capture = False
 
