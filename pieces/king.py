@@ -8,35 +8,41 @@ class King(Piece):
         self.movements = [(1, 1), (-1, -1), (1, -1), (-1, 1),
                         (1, 0), (-1, 0), (0, 1), (0, -1)]
     
+    # Check the boxes between the king and the 
+    # column tower h (h1 or h8) to see if the 
+    # right castling can be made
     def __v_right_boxes(self, table):
         p1 = self.p1
         for p2 in range(self.p2 + 1, 7):
             box = table.c_table[p1][p2]
-            if not box.is_available():
-                return False
-            if box.is_controlled(self):
+            if not box.is_available() or box.is_controlled(self):
                 return False
         return True
     
+    # Check the boxes between the king and the 
+    # column tower a (a1 or a8) to see if the 
+    # castling can be made to the left
     def __v_left_boxes(self, table):
         p1 = self.p1
         for p2 in range(self.p2 - 1, 0, -1):
             box = table.c_table[p1][p2]
-            if not box.is_available():
-                return False
-            if box.is_controlled(self):
+            if not box.is_available() or box.is_controlled(self):
                 return False
         return True
 
     
     def castling_to_right(self, table):
+        # If the boxes are available and not controlled and the tower is in position
         if self.__v_right_boxes(table) and not table.c_table[self.p1][7].is_available():
+            # If the king is not in check
             if self.in_check == False:
                 p1, p2 = self.p1, self.p2 + 2
-                destiny = table.c_table[p1][p2]
+                destiny = table.c_table[p1][p2] # Destiny of the king
                 tower = table.c_table[p1][7].piece_in_self
-                destiny_t = table.c_table[p1][p2 - 1]
+                destiny_t = table.c_table[p1][p2 - 1] # Destiny of the tower
+                # If the king or the tower have moved
                 if tower.moves == 0 and self.moves == 0:
+                    # The king and the tower change position simultaneously
                     table.movement_log.append(['0 - 0'])
                     destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
                     destiny_t.piece_in_self, table.c_table[p1][7].piece_in_self = tower, None
@@ -85,9 +91,11 @@ class King(Piece):
         if table.move_is_inside(p1, p2):
             destiny = table.c_table[p1][p2]
             if self.move_in_movements(p1, p2) and destiny.is_available():
+                # The only difference in particular that the king 
+                # has of the other pieces is that he cannot move 
+                # to a square that is controlled by an enemy piece
                 if not destiny.is_controlled(self):
                     table.movement_log.append([(self.p1, self.p2), (p1, p2)])
-                    table.verify_step_capture()
                     destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
                     self.change_position(table, p1, p2)
                     self.moves+= 1
@@ -106,7 +114,6 @@ class King(Piece):
                 if self.is_enemy_piece(f_piece):
                     if not destiny.is_controlled(self):
                         table.movement_log.append([(self.p1, self.p2), (p1, p2)])
-                        table.verify_step_capture()
                         f_piece.dead(table)
                         destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
                         self.change_position(table, p1, p2)

@@ -10,13 +10,11 @@ class Game:
 
     def intro(self):
         self.chess_table.create()
-
         system('cls')
         print('\n**************************Chess Game**************************\n')
-        print('Players\n ')
+        print('Players\n')
         self.player1 = Player1(input('Insert the name of the white player:'))
         self.player2 = Player2(input('Insert the name of the black player:'))
-
         self.player1.insert_pieces(self.chess_table)
         self.player2.insert_pieces(self.chess_table)
 
@@ -27,9 +25,13 @@ class Game:
                 positions.append(chr(c) + str(r))
         return p in positions
 
+    def off_step_capture(self, player):
+        for pawn in player.pieces[:8]:
+            pawn.p_step_capture = False
+
     def __move(self, player):
-        p = input('Insert the position of the piece you want to move: ')
-        pd = input('Where do you want to move: ')
+        p = input('Insert the position of the piece you want to move:')
+        pd = input('Where do you want to move:')
         if self.__valid_position(p) and self.__valid_position(pd):
             p1, p2 = 8 - int(p[1]), self.col[p[0]]
             pd1, pd2 = 8 - int(pd[1]), self.col[pd[0]]
@@ -42,8 +44,8 @@ class Game:
         return False
 
     def __capture(self, player):
-        p = input('Insert the position of the piece with which you want to capture: ')
-        pd = input('Where do you want to capture: ')
+        p = input('Insert the position of the piece with which you want to capture:')
+        pd = input('Where do you want to capture:')
         if self.__valid_position(p) and self.__valid_position(pd):
             p1, p2 = 8 - int(p[1]), self.col[p[0]]
             pd1, pd2 = 8 - int(pd[1]), self.col[pd[0]]
@@ -56,8 +58,8 @@ class Game:
         return False
 
     def __step_capture(self, player):
-        p = input('Insert the position of the piece with which you want to capture: ')
-        pd = input('Where do you want to capture: ')
+        p = input('Insert the position of the piece with which you want to capture:')
+        pd = input('Where do you want to capture:')
         if self.__valid_position(p) and self.__valid_position(pd):
             p1, p2 = 8 - int(p[1]), self.col[p[0]]
             pd1, pd2 = 8 - int(pd[1]), self.col[pd[0]]
@@ -123,6 +125,7 @@ class Game:
             if turn % 2 != 0:
                 system('cls')
                 player = self.player1
+                ad_player = self.player2
                 if player.pieces[8].in_check:
                     player.verify_checkmate(self.chess_table)
                     if player.pieces[8].in_checkmate:
@@ -132,6 +135,7 @@ class Game:
             else:
                 system('cls')
                 player = self.player2
+                ad_player = self.player1
                 if player.pieces[8].in_check:
                     player.verify_checkmate(self.chess_table)
                     if player.pieces[8].in_checkmate:
@@ -141,22 +145,26 @@ class Game:
 
             self.__print_chess_table(self.chess_table)
             print('\n1. move  2. Capture  3. Step capture  4. Castling to left  5. Castling to right  6. Exit')
-            op = input('Choose an option: ')
+            op = input('Choose an option:')
             print(op)
             if op == '1':
                 if self.__move(player):
+                    self.off_step_capture(ad_player)
                     turn+= 1
             elif op == '2':
                 if self.__capture(player):
+                    self.off_step_capture(ad_player)
                     turn+= 1
             elif op == '3':
                 if self.__step_capture(player):
                     turn+= 1
             elif op == '4':
                 if self.__castling_to_left(player):
+                    self.off_step_capture(ad_player)
                     turn+= 1
             elif op == '5':
                 if self.__castling_to_right(player):
+                    self.off_step_capture(ad_player)
                     turn+= 1
             elif op == '6':
                 system('cls')

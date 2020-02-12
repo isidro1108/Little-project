@@ -1,3 +1,5 @@
+# This is the parent class of all the pieces since it 
+# meets the basic characteristics of a piece
 class Piece:
     def __init__(self, color, p1, p2):
         self.color = color # Piece color
@@ -29,7 +31,8 @@ class Piece:
         for movement in self.movements:
             p1, p2 = self.p1 + movement[0], self.p2 + movement[1]
             if table.move_is_inside(p1, p2):
-                table.c_table[p1][p2].controlled_by.remove((type(self), self.color))
+                if (p1, p2) in self.controlled_boxes:
+                    table.c_table[p1][p2].controlled_by.remove((type(self), self.color))
         self.controlled_boxes = []
     
     # Remove the control of the piece, change its position and then set the new control
@@ -48,7 +51,6 @@ class Piece:
             destiny = table.c_table[p1][p2]
             if self.move_in_movements(p1, p2) and destiny.is_available():
                 table.movement_log.append([(self.p1, self.p2), (p1, p2)]) # Record the movement if it is valid
-                table.verify_step_capture()
                 destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
                 self.change_position(table, p1, p2)
                 self.moves+= 1
@@ -65,7 +67,6 @@ class Piece:
                 f_piece = table.c_table[p1][p2].piece_in_self
                 if self.is_enemy_piece(f_piece):
                     table.movement_log.append([(self.p1, self.p2), (p1, p2)])
-                    table.verify_step_capture()
                     f_piece.dead(table)
                     destiny.piece_in_self, table.c_table[self.p1][self.p2].piece_in_self = self, None
                     self.change_position(table, p1, p2)
