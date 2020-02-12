@@ -4,9 +4,10 @@ from father_class.piece import Piece
 # and brings together all the common characteristics of 
 # the Queen, the Tower and the Bishop
 class Mpiece(Piece):
+    # Additional feature
     def __init__(self, color, p1, p2):
         Piece.__init__(self, color, p1, p2)
-        self.dir_movements = [] # Direction of the movements
+        self.dir_movements = [] # <--
 
     # Get the movements around one direction recursively
     def g_movements(self, m1, m2, d1, d2):
@@ -27,6 +28,7 @@ class Mpiece(Piece):
     def v_boxes(self, table, p1, p2, pd1, pd2):
         return []
 
+    # Establishes control of the piece over their respective boxes
     def set_control(self, table):
         for movement in self.movements:
             p1, p2 = self.p1 + movement[0], self.p2 + movement[1]
@@ -36,11 +38,13 @@ class Mpiece(Piece):
                     table.c_table[p1][p2].controlled_by.append((type(self), self.color))
                     self.controlled_boxes.append((p1, p2))
 
+    # Change the piece's position
     def change_position(self, table, p1, p2):
         self.quit_control(table)
         self.p1, self.p2 = p1, p2
         self.set_control(table)
 
+    # Move the piece
     def move(self, table, p1, p2):
         if table.move_is_inside(p1, p2):
             destiny = table.c_table[p1][p2]
@@ -58,6 +62,7 @@ class Mpiece(Piece):
             return False
         return False
 
+    # Capture another piece with this piece
     def capture(self, table, p1, p2):
         if table.move_is_inside(p1, p2):
             destiny = table.c_table[p1][p2]

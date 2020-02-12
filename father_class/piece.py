@@ -1,14 +1,15 @@
-# This is the parent class of all the pieces since it 
-# meets the basic characteristics of a piece
+# This is the parent class of all the pieces 
 class Piece:
+    # piece's features
     def __init__(self, color, p1, p2):
-        self.color = color # Piece color
-        self.p1 = p1 # Row where the piece is according to the coordinates of the c_table matrix in Table
-        self.p2 = p2 # Column where the piece is according to the coordinates of the c_table matrix in Table
-        self.value = None # Piece value (attribute to overwrite)
-        self.moves = 0 # Counting of the movements of the piece
-        self.movements = [] # Pattern of the movements of the piece (m1, m2)
-        self.controlled_boxes = [] # Boxes controlled by the part given by the set_control method (p1, p2)
+        self.color = color
+        self.p1 = p1
+        self.p2 = p2
+        self.value = None
+        self.alive = True
+        self.moves = 0
+        self.movements = []
+        self.controlled_boxes = [] 
 
     # This method determines if a movement is within the movement patterns of a piece
     def move_in_movements(self, p1, p2):
@@ -80,6 +81,7 @@ class Piece:
     
     # Remove the piece from the board and enter it in a repository and remove all the controlled boxes
     def dead(self, table):
+        self.alive = False
         table.repository.append(self)
         for pos in self.controlled_boxes:
             table.c_table[pos[0]][pos[1]].controlled_by.remove((type(self), self.color))
