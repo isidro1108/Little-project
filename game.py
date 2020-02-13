@@ -3,35 +3,35 @@ from os import system
 
 # This class contains the game events
 class Game:
+    # Game Attributes
     def __init__(self):
-        self.chess_table = Table() # Create a dashboard instance
-        self.col = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6, 'h': 7} # Convert matrix coordinates to game coordinates
-        self.player1 = None # Attribute intended to contain White's player instance
-        self.player2 = None # Attribute intended to contain Black's player instance
-        self.posible_positions = []
+        self.chess_table = Table()
+        self.col = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6, 'h': 7}
+        self.player1 = None
+        self.player2 = None
+        self.possible_positions = []
 
+    # Create the board, enter the players and they insert their pieces
     def intro(self):
-        self.chess_table.create() # Insert the boxes on the board
-        system('cls') # Clean the terminal
+        self.chess_table.create()
+        system('cls')
         print('\n**************************Chess Game**************************\n')
         print('Players\n')
-        # Create instances of the players
         self.player1 = Player1(input('Insert the name of the white player:'))
         self.player2 = Player2(input('Insert the name of the black player:'))
-        # The players insert their pieces
         self.player1.insert_pieces(self.chess_table)
         self.player2.insert_pieces(self.chess_table)
-        self.__get_posible_positions()
+        self.__get_possible_positions()
     
     # Makes a list of valid entries for positions
-    def __get_posible_positions(self):
+    def __get_possible_positions(self):
         for c in range(ord('a'), ord('h') + 1):
             for r in range(1, 9):
-                self.posible_positions.append(chr(c) + str(r))
+                self.possible_positions.append(chr(c) + str(r))
 
     # Indicate if the position is valid
     def __valid_position(self, p):
-        return p in self.posible_positions
+        return p in self.possible_positions
 
     # Disable the ability to capture a pawn in step
     def off_step_capture(self, player):
@@ -55,6 +55,7 @@ class Game:
         self.chess_table.alert = 'Invalid input'
         return False
 
+    # Capture method
     def __capture(self, player):
         p = input('Insert the position of the piece with which you want to capture:')
         pd = input('Where do you want to capture:')
@@ -69,6 +70,7 @@ class Game:
         self.chess_table.alert = 'Invalid input'
         return False
 
+    # Step capture method
     def __step_capture(self, player):
         p = input('Insert the position of the piece with which you want to capture:')
         pd = input('Where do you want to capture:')
@@ -83,10 +85,12 @@ class Game:
         self.chess_table.alert = 'Invalid input'
         return False
 
+    # Perform left castling
     def __castling_to_left(self, player):
         move = player.castling_to_left(self.chess_table)
         return move
 
+    # Perform right castling
     def __castling_to_right(self, player):
         move = player.castling_to_right(self.chess_table)
         return move
@@ -132,14 +136,14 @@ class Game:
             index-= 1
         print('   a   b   c   d   e   f   g   h')
 
-    def init_game(self):    
-        turn = 1 # Shift counting
+    # Start game events
+    def init_game(self):
+        turn = 1
         while True:
             if turn % 2 != 0:
                 system('cls')
-                player = self.player1 # Current player
-                ad_player = self.player2 # opposing player to the current
-                # Check if it is a normal check or a checkmate
+                player = self.player1
+                ad_player = self.player2
                 if player.pieces[8].in_check:
                     player.verify_checkmate(self.chess_table)
                     if player.pieces[8].in_checkmate:
@@ -157,7 +161,7 @@ class Game:
                     self.chess_table.alert = 'Black king is in check'
                 print("Black's turn ({})\n".format(player.name))
 
-            self.__print_chess_table(self.chess_table) # Print board in the terminal
+            self.__print_chess_table(self.chess_table)
             print('\n1. move  2. Capture  3. Step capture  4. Castling to left  5. Castling to right  6. Exit')
             op = input('Choose an option:')
             print(op)

@@ -41,7 +41,6 @@ class Player:
         if self.is_my_piece(piece):
             move = piece.move(table, pd1, pd2)
             table.update()
-            # If the king is in check and the movement is valid...
             if self.pieces[8].in_check and move:
                 piece.revert_move(table)
                 table.update()
