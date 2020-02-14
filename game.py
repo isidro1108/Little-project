@@ -28,7 +28,7 @@ class Game:
             are_letters = self.__valid_input(name_p1) and self.__valid_input(name_p2) 
             if is_good_length and are_letters:
                 break
-            self.chess_table.alert = 'Only 8 characters or more than one, neither should they be numbers\n'
+            self.chess_table.alert = 'Only 8 characters or at least one, neither should they be numbers\n'
         self.chess_table.alert = ''
         self.player1.insert_pieces(self.chess_table)
         self.player2.insert_pieces(self.chess_table)
@@ -61,48 +61,58 @@ class Game:
     # to matrix coordinates and execute player movement methods
     def __move(self, player):
         p = input('Insert the position of the piece you want to move:')
+        if not self.__valid_position(p):
+            self.chess_table.alert = '\nInvalid input'
+            return False
         pd = input('Where do you want to move:')
-        if self.__valid_position(p) and self.__valid_position(pd):
-            # For example
-            p1, p2 = 8 - int(p[1]), self.col[p[0]] # <--
-            pd1, pd2 = 8 - int(pd[1]), self.col[pd[0]] # <--
-            if self.chess_table.c_table[p1][p2].piece_in_self == None:
-                self.chess_table.alert = 'This box is empty'
-                return False
-            move = player.move(self.chess_table, p1, p2, pd1, pd2)
-            return move
-        self.chess_table.alert = 'Invalid input'
-        return False
+        if not self.__valid_position(p):
+            self.chess_table.alert = '\nInvalid input'
+            return False
+        # For example
+        p1, p2 = 8 - int(p[1]), self.col[p[0]] # <--
+        pd1, pd2 = 8 - int(pd[1]), self.col[pd[0]] # <--
+        if self.chess_table.c_table[p1][p2].piece_in_self == None:
+            self.chess_table.alert = 'This box is empty'
+            return False
+        move = player.move(self.chess_table, p1, p2, pd1, pd2)
+        return move
+        
 
     # Capture method
     def __capture(self, player):
         p = input('Insert the position of the piece with which you want to capture:')
+        if not self.__valid_position(p):
+            self.chess_table.alert = '\nInvalid input'
+            return False
         pd = input('Where do you want to capture:')
-        if self.__valid_position(p) and self.__valid_position(pd):
-            p1, p2 = 8 - int(p[1]), self.col[p[0]]
-            pd1, pd2 = 8 - int(pd[1]), self.col[pd[0]]
-            if self.chess_table.c_table[p1][p2].piece_in_self == None:
-                self.chess_table.alert = 'This box is empty'
-                return False
-            move = player.capture(self.chess_table, p1, p2, pd1, pd2)
-            return move
-        self.chess_table.alert = 'Invalid input'
-        return False
+        if not self.__valid_position(pd):
+            self.chess_table.alert = '\nInvalid input'
+            return False
+        p1, p2 = 8 - int(p[1]), self.col[p[0]]
+        pd1, pd2 = 8 - int(pd[1]), self.col[pd[0]]
+        if self.chess_table.c_table[p1][p2].piece_in_self == None:
+            self.chess_table.alert = 'This box is empty'
+            return False
+        move = player.capture(self.chess_table, p1, p2, pd1, pd2)
+        return move
 
     # Step capture method
     def __step_capture(self, player):
         p = input('Insert the position of the piece with which you want to capture:')
+        if not self.__valid_position(p):
+            self.chess_table.alert = '\nInvalid input'
+            return False
         pd = input('Where do you want to capture:')
-        if self.__valid_position(p) and self.__valid_position(pd):
-            p1, p2 = 8 - int(p[1]), self.col[p[0]]
-            pd1, pd2 = 8 - int(pd[1]), self.col[pd[0]]
-            if self.chess_table.c_table[p1][p2].piece_in_self == None:
-                self.chess_table.alert = 'This box is empty'
-                return False
-            move = player.step_capture(self.chess_table, p1, p2, pd1, pd2)
-            return move
-        self.chess_table.alert = 'Invalid input'
-        return False
+        if not self.__valid_position(pd):
+            self.chess_table.alert = '\nInvalid input'
+            return False
+        p1, p2 = 8 - int(p[1]), self.col[p[0]]
+        pd1, pd2 = 8 - int(pd[1]), self.col[pd[0]]
+        if self.chess_table.c_table[p1][p2].piece_in_self == None:
+            self.chess_table.alert = 'This box is empty'
+            return False
+        move = player.step_capture(self.chess_table, p1, p2, pd1, pd2)
+        return move
 
     # Perform left castling
     def __castling_to_left(self, player):
@@ -115,7 +125,7 @@ class Game:
         return move
 
     # Print a set of strings that show the instances of empty part and boxes on the board
-    def __print_chess_table(self, table, show_alert= True):
+    def __print_chess_table(self, table):
         index = 8
         for row in table.c_table:
             pieces = ''
@@ -147,11 +157,7 @@ class Game:
                     pieces+= '[♔ ]'
                 elif isinstance(piece, Pawn) and piece.color == 'black':
                     pieces+= '[♙ ]'
-            if index == 5 and show_alert:
-                print(index, pieces, table.alert)
-                table.alert = ''
-            else:
-                print(index, pieces)
+            print(index, pieces)
             index-= 1
         print('   a   b   c   d   e   f   g   h')
 
@@ -167,7 +173,7 @@ class Game:
                     player.verify_checkmate(self.chess_table)
                     if player.pieces[8].in_checkmate:
                         break
-                    self.chess_table.alert = 'White king is in check'
+                    self.chess_table.alert = '\nWhite king is in check'
                 print("White's turn ({})\n".format(player.name))
             else:
                 system('cls')
@@ -177,43 +183,53 @@ class Game:
                     player.verify_checkmate(self.chess_table)
                     if player.pieces[8].in_checkmate:
                         break
-                    self.chess_table.alert = 'Black king is in check'
+                    self.chess_table.alert = '\nBlack king is in check'
                 print("Black's turn ({})\n".format(player.name))
 
             self.__print_chess_table(self.chess_table)
             print('\n1. move  2. Capture  3. Step capture  4. Castling to left  5. Castling to right  6. Exit')
             op = input('Choose an option:')
-            print(op)
             if op == '1':
                 if self.__move(player):
                     self.off_step_capture(ad_player)
                     turn+= 1
+                else:
+                    input(self.chess_table.alert)
             elif op == '2':
                 if self.__capture(player):
                     self.off_step_capture(ad_player)
                     turn+= 1
+                else:
+                    input(self.chess_table.alert)
             elif op == '3':
                 if self.__step_capture(player):
                     turn+= 1
+                else:
+                    input(self.chess_table.alert)
             elif op == '4':
                 if self.__castling_to_left(player):
                     self.off_step_capture(ad_player)
                     turn+= 1
+                else:
+                    input(self.chess_table.alert)
             elif op == '5':
                 if self.__castling_to_right(player):
                     self.off_step_capture(ad_player)
                     turn+= 1
+                else:
+                    input(self.chess_table.alert)
             elif op == '6':
                 system('cls')
                 exit()
             else:
-                self.chess_table.alert = 'Incorrect option'
+                self.chess_table.alert = '\nIncorrect option'
+                input(self.chess_table.alert)
         # Check who won
         if player == self.player1:
-            self.__print_chess_table(self.chess_table, False)
+            self.__print_chess_table(self.chess_table)
             print('\n**************************Check mate, Black wins**************************')
         else:
-            self.__print_chess_table(self.chess_table, False)
+            self.__print_chess_table(self.chess_table)
             print('\n**************************Check mate, White wins**************************')
 
 chess_game = Game()

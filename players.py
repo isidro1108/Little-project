@@ -31,7 +31,7 @@ class Player:
             if piece not in self.pieces and piece.color == self.pieces[-1].color:
                 self.pieces.append(piece)
         else:
-            table.alert = 'The box is empty'
+            table.alert = '\nThe box is empty'
 
     # The player chooses the piece to move and the 
     # piece executes its method of movement
@@ -44,10 +44,10 @@ class Player:
             if self.pieces[8].in_check and move:
                 piece.revert_move(table)
                 table.update()
-                table.alert = 'The king is in check with this movement'
+                table.alert = '\nThe king is in check with this movement'
                 return False
             return move
-        table.alert = "It isn't your piece"
+        table.alert = "\nIt isn't your piece"
         return False
     
     # The player chooses the piece with which he wishes 
@@ -61,10 +61,10 @@ class Player:
             if self.pieces[8].in_check and move:
                 piece.revert_capture(table)
                 table.update()
-                table.alert = 'The king is in check with this movement'
+                table.alert = '\nThe king is in check with this movement'
                 return False
             return move
-        table.alert = "It isn't your piece"
+        table.alert = "\nIt isn't your piece"
         return False
 
     # Choose the pawn and the pawn executes the step capture
@@ -77,12 +77,12 @@ class Player:
                 if self.pieces[8].in_check and move:
                     piece.revert_capture(table)
                     table.update()
-                    table.alert = 'The king is in check with this movement'
+                    table.alert = '\nThe king is in check with this movement'
                     return False
                 return move
-            table.alert = "It isn't your piece"
+            table.alert = "\nIt isn't your piece"
             return False
-        table.alert = 'This piece is not a pawn'
+        table.alert = '\nThis piece is not a pawn'
         return False
     
     # Perform the approach method to the king's left
@@ -94,9 +94,9 @@ class Player:
                 move = piece.castling_to_left(table)
                 table.update()
                 return move
-            table.alert = "It isn't your piece"
+            table.alert = "\nIt isn't your piece"
             return False
-        table.alert = 'This piece is not a king or this box is empty'
+        table.alert = '\nThis piece is not a king or this box is empty'
         return False
     
     # Perform the approach method to the king's right
@@ -108,9 +108,9 @@ class Player:
                 move = piece.castling_to_right(table)
                 table.update()
                 return move
-            table.alert = "It isn't your piece"
+            table.alert = "\nIt isn't your piece"
             return False
-        table.alert = 'This piece is not a king or this box is'
+        table.alert = '\nThis piece is not a king or this box is'
         return False
 
     # Check if the king is in checkmate

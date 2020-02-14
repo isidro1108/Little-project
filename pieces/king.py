@@ -44,11 +44,11 @@ class King(Piece):
                     self.moves+= 1
                     tower.moves+= 1
                     return True
-                table.alert = 'One of the pieces that make the castling has moved'
+                table.alert = '\nOne of the pieces that make the castling has moved'
                 return False
-            table.alert = 'The king is in check'
+            table.alert = '\nThe king is in check'
             return False
-        table.alert = 'The king cannot do the castling'
+        table.alert = '\nThe king cannot do the castling'
         return False
 
     # Do the left castling
@@ -68,11 +68,11 @@ class King(Piece):
                     self.moves+= 1
                     tower.moves+= 1
                     return True
-                table.alert = 'One of the pieces that make the castling has moved'
+                table.alert = '\nOne of the pieces that make the castling has moved'
                 return False
-            table.alert = 'The king is in check'
+            table.alert = '\nThe king is in check'
             return False
-        table.alert = 'The king cannot do the castling'
+        table.alert = '\nThe king cannot do the castling'
         return False
 
     # Change the king's position
@@ -93,9 +93,9 @@ class King(Piece):
                     self.change_position(table, p1, p2)
                     self.moves+= 1
                     return True
-                table.alert = 'The box is controlled by an enemy piece'
+                table.alert = '\nThe box is controlled by an enemy piece'
                 return False
-            table.alert = 'Invalid movement'
+            table.alert = '\nInvalid movement'
             return False
         return False
 
@@ -113,10 +113,10 @@ class King(Piece):
                         self.change_position(table, p1, p2)
                         self.moves+= 1
                         return True
-                    table.alert = 'The piece is protected'
+                    table.alert = '\nThe piece is protected'
                     return False
-                table.alert = 'This is not a enemy piece'
+                table.alert = '\nThis is not a enemy piece'
                 return False
-            table.alert = 'Invalid movement or there is no piece to capture'
+            table.alert = '\nInvalid movement or there is no piece to capture'
             return False
         return False

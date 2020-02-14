@@ -54,7 +54,7 @@ class Pawn(Piece):
             destiny = table.c_table[p1][p2]
             if self.move_in_movements(p1, p2) and destiny.is_available():
                 if self.__is_two_step(p1, p2) and not table.c_table[p1 - self.dir][p2].is_available():
-                    table.alert = 'The pawn cannot jump over another piece'
+                    table.alert = '\nThe pawn cannot jump over another piece'
                     return False
                 if self.__is_two_step(p1, p2):
                     self.p_step_capture = True
@@ -69,7 +69,7 @@ class Pawn(Piece):
                     self.to_crown(table)
                 self.moves+= 1
                 return True
-            table.alert = 'Invalid movement'
+            table.alert = '\nInvalid movement'
             return False
         return False
 
@@ -88,9 +88,9 @@ class Pawn(Piece):
                         self.to_crown(table)
                     self.moves+= 1
                     return True
-                table.alert = 'This is not a enemy piece'
+                table.alert = '\nThis is not a enemy piece'
                 return False
-            table.alert = 'Invalid movement or there is no piece to capture'
+            table.alert = '\nInvalid movement or there is no piece to capture'
             return False
         return False
     
@@ -108,9 +108,9 @@ class Pawn(Piece):
                     self.change_position(table, p1, p2)
                     self.moves+= 1
                     return True
-                table.alert = 'This is not a enemy piece or cannot be captured at step'
+                table.alert = '\nThis is not a enemy piece or cannot be captured at step'
                 return False
-            table.alert = 'Invalid movement or there is no piece to capture'
+            table.alert = '\nInvalid movement or there is no piece to capture'
             return False
         return False
 

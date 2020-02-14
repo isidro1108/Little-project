@@ -56,7 +56,7 @@ class Piece:
                 self.change_position(table, p1, p2)
                 self.moves+= 1
                 return True
-            table.alert = 'Invalid movement'
+            table.alert = '\nInvalid movement'
             return False
         return False
 
@@ -73,9 +73,9 @@ class Piece:
                     self.change_position(table, p1, p2)
                     self.moves+= 1
                     return True
-                table.alert = 'This is not a enemy piece'
+                table.alert = '\nThis is not a enemy piece'
                 return False
-            table.alert = 'Invalid movement or there is no piece to capture'
+            table.alert = '\nInvalid movement or there is no piece to capture'
             return False
         return False
     
