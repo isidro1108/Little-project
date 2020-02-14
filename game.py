@@ -14,11 +14,22 @@ class Game:
     # Create the board, enter the players and they insert their pieces
     def intro(self):
         self.chess_table.create()
-        system('cls')
-        print('\n**************************Chess Game**************************\n')
-        print('Players\n')
-        self.player1 = Player1(input('Insert the name of the white player:'))
-        self.player2 = Player2(input('Insert the name of the black player:'))
+        while True:
+            system('cls')
+            print('\n**************************Chess Game**************************\n')
+            print('Players\n')
+            if self.chess_table.alert != '':
+                print(self.chess_table.alert)
+            name_p1 = input('Insert the name of the white player:')
+            name_p2 = input('Insert the name of the black player:')
+            self.player1 = Player1(name_p1)
+            self.player2 = Player2(name_p2)
+            is_good_length = len(name_p1) <= 8 and len(name_p2) <= 8
+            are_letters = self.__valid_input(name_p1) and self.__valid_input(name_p2) 
+            if is_good_length and are_letters:
+                break
+            self.chess_table.alert = 'Only 8 characters or more than one, neither should they be numbers\n'
+        self.chess_table.alert = ''
         self.player1.insert_pieces(self.chess_table)
         self.player2.insert_pieces(self.chess_table)
         self.__get_possible_positions()
@@ -32,6 +43,14 @@ class Game:
     # Indicate if the position is valid
     def __valid_position(self, p):
         return p in self.possible_positions
+
+    # Indicate if the input name is valid
+    def __valid_input(self, entry):
+        for char in entry:
+            is_number = ord(char) >= ord('0') and ord(char) <= ord('9')
+            if is_number:
+                return False
+        return entry != ''
 
     # Disable the ability to capture a pawn in step
     def off_step_capture(self, player):
