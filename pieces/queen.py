@@ -10,7 +10,8 @@ class Queen(Mpiece):
                             (1, 0), (-1, 0), (0, 1), (0, -1)]
         self.movements = [(1, 1), (-1, -1), (1, -1), (-1, 1),
                         (1, 0), (-1, 0), (0, 1), (0, -1)]
-
+                        
+    # The method of checking the queen's squares is a combination of the tower and the bishop's method
     def v_boxes(self, table, p1, p2, pd1, pd2):
         d1, d2 = pd1 - p1, pd2 - p2
         if d1 == 0 or d2 == 0:
