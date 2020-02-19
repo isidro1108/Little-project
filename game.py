@@ -65,7 +65,7 @@ class Game:
             self.chess_table.alert = '\nInvalid input'
             return False
         pd = input('Where do you want to move:')
-        if not self.__valid_position(p):
+        if not self.__valid_position(pd):
             self.chess_table.alert = '\nInvalid input'
             return False
         # For example
@@ -173,7 +173,7 @@ class Game:
                     player.verify_checkmate(self.chess_table)
                     if player.pieces[8].in_checkmate:
                         break
-                    self.chess_table.alert = '\nWhite king is in check'
+                    self.chess_table.check_alert = '\nThe white king is in check'
                 print("White's turn ({})\n".format(player.name))
             else:
                 system('cls')
@@ -183,10 +183,12 @@ class Game:
                     player.verify_checkmate(self.chess_table)
                     if player.pieces[8].in_checkmate:
                         break
-                    self.chess_table.alert = '\nBlack king is in check'
+                    self.chess_table.check_alert = '\nThe black king is in check'
                 print("Black's turn ({})\n".format(player.name))
 
             self.__print_chess_table(self.chess_table)
+            print(self.chess_table.check_alert)
+            self.chess_table.check_alert = ''
             print('\n1. move  2. Capture  3. Step capture  4. Castling to left  5. Castling to right  6. Exit')
             op = input('Choose an option:')
             if op == '1':

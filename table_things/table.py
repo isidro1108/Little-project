@@ -9,6 +9,7 @@ class Table:
         self.repository = []
         self.pos_kings = {'white': (7, 4), 'black': (0, 4)}
         self.alert = ''
+        self.check_alert = ''
     
     # Insert the boxes on the board (Table.c_table) recursively
     def create(self, turn_row = 1):
